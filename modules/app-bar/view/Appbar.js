@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { Appbar as PaperAppbar } from 'react-native-paper';
 
-const Appbar = ({ onBackPress, title, subtitle }) => {
+const Appbar = ({ onBackPress, title }) => {
     return (
         <PaperAppbar.Header>
             <PaperAppbar.BackAction
-                onPress={onBackPress}
+                onPress={() => onBackPress()}
             />
-            <Appbar.Content
+            <PaperAppbar.Content
                 title={title}
-                subtitle={subtitle}
             />
         </PaperAppbar.Header>
     );

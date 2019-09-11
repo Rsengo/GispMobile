@@ -2,13 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import styles from './Main.styles';
 import { Map } from '../../map';
-import { Controls } from '../../controls';
+import { Controls } from '../../map-controls';
 
-const Main = () => {
+const Main = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Map />
-      <Controls />
+      <Controls navigation={navigation} />
     </View>
   );
 };

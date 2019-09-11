@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, Checkbox } from '../../map-controls/view/node_modules/react-native-paper';
+import { List, Checkbox } from 'react-native-paper';
 import Legend from './Legend';
 import { layerTreeItemTypes } from '../data/constants';
 

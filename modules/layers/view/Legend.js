@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List } from '../../map-controls/view/node_modules/react-native-paper';
+import { List } from 'react-native-paper';
 import { Image } from 'react-native';
 import styles from './Legend.styles';
 

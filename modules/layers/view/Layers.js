@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
-import { List } from '../../map-controls/view/node_modules/react-native-paper';
-import apiService from '../../../services/apiService';
+import { List } from 'react-native-paper';
+import { apiService } from '../../../services';
 import Layer from './Layer';
 import { Appbar } from '../../app-bar';
 

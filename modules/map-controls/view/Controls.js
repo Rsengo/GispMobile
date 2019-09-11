@@ -1,6 +1,7 @@
 import React from 'react';
 import { FAB, Portal } from 'react-native-paper';
 import getActions from './Controls.actions';
+import styles from './Controls.styles'
 
 const Controls = ({ navigation }) => {
   const [open, setOpen] = React.useState(false);
@@ -9,6 +10,7 @@ const Controls = ({ navigation }) => {
       <FAB.Group
         open={open}
         icon={open ? 'cancel' : 'settings'}
+        fabStyle={styles.fab}
         actions={getActions(navigation)}
         onStateChange={() => setOpen(!open)}
        />
