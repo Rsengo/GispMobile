@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
-import styles from './Root.styles';
+import styles from './Main.styles';
 import { Map } from '../../map';
 import { Controls } from '../../controls';
 
-const Root = () => {
+const Main = () => {
   return (
     <View style={styles.container}>
       <Map />
@@ -13,4 +13,4 @@ const Root = () => {
   );
 };
 
-export default Root;
+export default Main;

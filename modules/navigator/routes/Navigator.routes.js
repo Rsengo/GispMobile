@@ -1,14 +1,16 @@
-import { Root } from '../../root';
+import { Main } from '../../main';
 import { Layers } from '../../layers';
 
 const navigationComponents = {
-    Root: {screen: Root},
+    Main: {screen: Main},
     Layers: {screen: Layers},
-}
+};
 
 const routes = {
-    Root: 'Root',
+    Main: 'Main',
     Layers: 'Layers'
-}
+};
 
-export { routes, navigationComponents };
+const initialRouteName = routes.Main;
+
+export { routes, navigationComponents, initialRouteName };

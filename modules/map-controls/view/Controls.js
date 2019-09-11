@@ -1,15 +1,15 @@
 import React from 'react';
 import { FAB, Portal } from 'react-native-paper';
-import actions from './Controls.actions';
+import getActions from './Controls.actions';
 
-const Controls = () => {
+const Controls = ({ navigation }) => {
   const [open, setOpen] = React.useState(false);
   return (
     <Portal>
       <FAB.Group
         open={open}
         icon={open ? 'cancel' : 'settings'}
-        actions={actions}
+        actions={getActions(navigation)}
         onStateChange={() => setOpen(!open)}
        />
     </Portal>

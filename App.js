@@ -1,11 +1,11 @@
 import React from 'react';
-import { Root } from './modules/root';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { Navigator } from './modules/navigator';
 
 const App = () => {
   return (
     <PaperProvider>
-      <Root />
+      <Navigator />
     </PaperProvider>
   );
 };
