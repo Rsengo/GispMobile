@@ -10,9 +10,12 @@ const Layers = ({ navigation }) => {
     const { layersTree } = mapManifest; 
     return (
         <View>
-            <Appbar onBackPress={navigation.goBack} />
+            <Appbar 
+                onBackPress={navigation.goBack} 
+                title="Дерево слоев"
+            />
             <ScrollView>
-                <List.Section title="Слои">
+                <List.Section>
                     {
                         layersTree.map(x => {
                             const { key, ...childProps } = x;
