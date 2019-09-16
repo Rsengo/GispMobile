@@ -1,3 +1,8 @@
 import Root from './view/Root';
+import { reducer, actions } from './redux';
 
-export { Root };
+export {
+    Root,
+    reducer,
+    actions
+};

@@ -5,14 +5,7 @@ import {
   } from 'redux';
   import thunk from 'redux-thunk';
 
-// import { reducer as localeReducer } from './features/locale';
-// import { reducer as userSettingsReducer } from './features/userSettings';
-// import { reducer as authReducer } from './features/auth';
-// import { reducer as notifyReducer } from './features/notify';
-// import { reducer as profileReducer } from './features/profile';
-// import { reducer as resumeReducer } from './features/resumes';
-// import { reducer as vacancyReducer } from './features/vacancies';
-
+import { reducer as mapManifestReducer } from '../../modules/root';
 
 const configureStore = (extra) => {
     const middlewares = [
@@ -30,13 +23,7 @@ const configureStore = (extra) => {
 }
   
 const createReducer = () => combineReducers({
-    // userSettings: userSettingsReducer,
-    // auth: authReducer,
-    // notify: notifyReducer,
-    // locale: localeReducer,
-    // profile: profileReducer,
-    // resume: resumeReducer,
-    // vacancy: vacancyReducer,
+    mapManifest: mapManifestReducer
 });
 
 export { createReducer };
