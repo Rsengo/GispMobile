@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { Navigator } from './modules/navigator';
+import { Root } from './modules/root';
 import { theme } from './themes';
 import { Api } from './api'
 import { configureStore } from './store'
@@ -15,7 +15,7 @@ const App = () => {
   return (
     <ReduxProvider store={store}>
       <PaperProvider theme={theme}>
-        <Navigator />
+        <Root />
       </PaperProvider>
     </ReduxProvider>
   );

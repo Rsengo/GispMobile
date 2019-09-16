@@ -1,9 +1,9 @@
-const layerTreeItemTypes = {
+const LayerTreeItemTypes = {
     layer: 'layer',
     sublayer: 'sublayer',
     legend: 'legend'
 }
 
 export {
-    layerTreeItemTypes
+    LayerTreeItemTypes
 }

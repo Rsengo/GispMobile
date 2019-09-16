@@ -6,7 +6,7 @@ class MapApi extends BaseApi {
         super(baseUrl);
     }
 
-    getMapManifest() {
+    async getMapManifest() {
         // TODO:
     }
 }

@@ -27,7 +27,7 @@ const _getChldrenPropName = (layer) => {
     return Object.keys(layer).find(x => _childrenPropNames.includes(x));
 }
 
-const getListSublayers = (layers, setLayerId = false) => {
+const getListSublayers = (layers, setLayerId=false) => {
     return layers.map(x => _getLayerListSublayers(x, setLayerId)).flat();
 }
 
@@ -35,4 +35,4 @@ const layerService = {
     getListSublayers
 }
 
-export { layerService }
+export default layerService;

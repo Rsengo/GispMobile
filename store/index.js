@@ -1,3 +1,3 @@
-import configureStore, { createReducer } from './configureStore';
+import configureStore, { createReducer } from './configuration';
 
 export { configureStore, createReducer };
