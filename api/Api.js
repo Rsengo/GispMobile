@@ -1,4 +1,4 @@
-import MapApi from './map-api';
+import { MapApi } from './map-api';
 
 class Api {
   constructor(baseUrl = '') {

@@ -4,9 +4,13 @@ import { Navigator } from '../../navigator'
 import { actions as rootActions } from '../redux';
 import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
+import { View } from 'react-native';
+import styles from './Root.styles';
 
 const Spinner = () => (
-    <ActivityIndicator animating={true} />
+    <View style={styles.spinner}>
+        <ActivityIndicator animating={true} size='large' />
+    </View>
 );
 
 class Root extends React.Component {
@@ -42,7 +46,7 @@ class Root extends React.Component {
     render() {
         const content = this.getContent();
         return(
-            { content }
+            <Spinner />
         );
     }
 }

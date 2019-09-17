@@ -16,6 +16,9 @@ const reducer = (state=initialState, action) => {
 
         case ActionTypes.MAP_MANIFEST_LOAD_ERROR:
             return { ...state, error: true, errorMessage: payload };
+
+        default:
+            return { ...state };
     }
 }
 
