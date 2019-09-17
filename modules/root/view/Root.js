@@ -13,6 +13,8 @@ class Root extends React.Component {
     componentWillMount() {
         const { loadMapManifest } = this.props;
         loadMapManifest();
+        // TODO: Проверить, мб работает
+        // this.reload();
     }
 
     reload() {
