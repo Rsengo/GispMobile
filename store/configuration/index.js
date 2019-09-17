@@ -5,7 +5,7 @@ import {
   } from 'redux';
   import thunk from 'redux-thunk';
 
-import { reducer as mapManifestReducer } from '../../modules/root';
+import { reducer as rootReducer } from '../../modules/root';
 
 const configureStore = (extra) => {
     const middlewares = [
@@ -23,7 +23,7 @@ const configureStore = (extra) => {
 }
   
 const createReducer = () => combineReducers({
-    mapManifest: mapManifestReducer
+    root: rootReducer
 });
 
 export { createReducer };
