@@ -7,6 +7,10 @@ import {
 
 import { reducer as rootReducer } from '../../modules/root';
 
+const createReducer = () => combineReducers({
+  root: rootReducer
+});
+
 const configureStore = (extra) => {
     const middlewares = [
       thunk.withExtraArgument(extra),
@@ -21,10 +25,6 @@ const configureStore = (extra) => {
 
     return store;
 }
-  
-const createReducer = () => combineReducers({
-    root: rootReducer
-});
 
 export { createReducer };
 export default configureStore;

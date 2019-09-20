@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Navigator } from '../../navigator'
 import { actions as rootActions } from '../redux';
-import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import styles from './Root.styles';
 
 const Spinner = () => (
@@ -12,6 +12,12 @@ const Spinner = () => (
         <ActivityIndicator animating={true} size='large' />
     </View>
 );
+
+const Reload = ({message}) => (
+    <View style={styles.reload}>
+        <Text>{message}</Text>
+    </View>
+)
 
 class Root extends React.Component {
     componentWillMount() {
@@ -26,28 +32,21 @@ class Root extends React.Component {
         loadMapManifest();
     }
 
-    getContent() {
+    render() {
         const { 
             mapManifestLoadingProcessing, 
             error, 
             errorMessage } = this.props;
         
         if (mapManifestLoadingProcessing) {
-            return (<Spinner />);
+            return <Spinner />;
         }
 
         if (error) {
-            return (<Spinner />);
+            return <Reload message={errorMessage} />;
         }
 
-        return (<Navigator />)
-    }
-
-    render() {
-        const content = this.getContent();
-        return(
-            <Spinner />
-        );
+        return <Navigator />
     }
 }
 

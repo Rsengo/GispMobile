@@ -1,5 +1,6 @@
 import BaseApi from '../BaseApi';
 import axios from 'axios';
+import ApiResponse from '../ApiResponse';
 
 class MapApi extends BaseApi {
     constructor(baseUrl = '') {
@@ -7,7 +8,7 @@ class MapApi extends BaseApi {
     }
 
     async getMapManifest() {
-        return await new Promise(resolve => setTimeout(() => resolve(mapManifest), 3000));
+        return await new Promise(resolve => setTimeout(() => resolve(new ApiResponse(true, mapManifest)), 3000));
     }
 }
 

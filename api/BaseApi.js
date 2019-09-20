@@ -1,4 +1,4 @@
-import ApiRequest from './ApiRequest';
+import ApiResponse from './ApiResponse';
 
 const SUCCESS_RESPONSE = 'success';
 const ERROR_MESSAGE = 'Ошибка при загрузке данных';
@@ -15,10 +15,10 @@ class BaseApi {
         const success = responseStatus === 200 && status === SUCCESS_RESPONSE;
         
         if (success) {
-            return new ApiRequest(success, data=data);
+            return new ApiResponse(success, data=data);
         }
 
-        return new ApiRequest(success, errorMessage=ERROR_MESSAGE);
+        return new ApiResponse(success, errorMessage=ERROR_MESSAGE);
     }
 }
 

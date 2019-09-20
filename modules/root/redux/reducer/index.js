@@ -1,5 +1,4 @@
 import { ActionTypes } from '../actions';
-import { layerService } from '../../../../services';
 import initialState from '../initial';
 
 const reducer = (state=initialState, action) => {
@@ -10,12 +9,13 @@ const reducer = (state=initialState, action) => {
             return { ...state, mapManifestLoadingProcessing: payload };
         
         case ActionTypes.MAP_MANIFEST_LOAD_SUCCESS:
-            const { layers } = payload; 
-            const listSublayers = layerService.getListSublayers(...layers, true);
-            return { ...state, ...payload, listSublayers, error: false };
+            return { ...state, ...payload, error: false };
 
         case ActionTypes.MAP_MANIFEST_LOAD_ERROR:
             return { ...state, error: true, errorMessage: payload };
+
+        case ActionTypes.LIST_LAYER_ACTIVATE:
+            return { ...state, listSublayers: payload }
 
         default:
             return { ...state };
