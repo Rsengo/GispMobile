@@ -1,11 +1,36 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import styles from './Map.styles';
-import MapView from 'react-native-maps';
+import MapView, {
+  MAP_TYPES,
+  ProviderPropType,
+  WMSTile,
+} from 'react-native-maps';
+import { layersTreeService, layerService } from '../../../services';
+import { actions as rootActions } from '../../root';
+import { View, Text } from 'react-native';
+import { getWmsLayerUrl } from '../services/wmsService'
 
-const Map = () => {
+const Map = ({ activeLayers }) => {
   return (
-    <MapView style={styles.map} />
+    <MapView 
+      style={styles.map}
+      mapType={MAP_TYPES.SATELLITE}
+    >
+      {activeLayers.map(layerInfo => (
+        <WMSTile urlTemplate={getWmsLayerUrl(layerInfo)} />
+      ))}
+    </MapView>
   );
 };
 
-export default Map;
+const mapStateToProps = (state) => {
+  const { listSublayers } = state.root;
+  const activeSublayers = layerService.getActive(listSublayers);
+  const activeLayers = layerService.groupByTopLayer(activeSublayers);
+
+  return { activeLayers }
+};
+
+export default connect(mapStateToProps)(Map);

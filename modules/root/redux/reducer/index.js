@@ -14,8 +14,9 @@ const reducer = (state=initialState, action) => {
         case ActionTypes.MAP_MANIFEST_LOAD_ERROR:
             return { ...state, error: true, errorMessage: payload };
 
-        case ActionTypes.LIST_LAYER_ACTIVATE:
-            return { ...state, listSublayers: payload }
+        case ActionTypes.LAYER_ACTIVATE:
+            const { listSublayers, layersTree } = payload;
+            return { ...state, listSublayers, layersTree }
 
         default:
             return { ...state };

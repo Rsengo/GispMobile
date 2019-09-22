@@ -1,34 +1,70 @@
 import * as React from 'react';
-import { List, Checkbox } from 'react-native-paper';
+import { View } from 'react-native';
+import { List, Checkbox, Portal } from 'react-native-paper';
 import Legend from './Legend';
-import { LayerTreeItemTypes } from '../data/layerTreeItemTypes';
+import { LayerTreeItemTypes } from '../../../constants';
+import styles from './Layer.styles';
+
+const LayerCheckbox = ({ itemId, selected, activateLayer }) => (
+  <View style={styles.checkboxContainer}>
+    <Checkbox 
+      status={selected ? 'checked' : 'unchecked'} 
+      onPress={() => activateLayer(itemId, !selected)}
+    />
+  </View>
+);
+
+const LayerRow = ({ title, layerKey, childNodes }) => (
+  <View style={styles.itemContainer}>
+    <List.Accordion title={title} key={layerKey}>
+      {childNodes}
+    </List.Accordion>
+  </View>
+);
+
+const mapChildToComponent = (child, activateLayer) => {
+  const { key, Id, ...childProps } = child;
+  return child.type === LayerTreeItemTypes.LEGEND 
+      ? (
+          <Legend 
+            {...childProps} 
+            legendKey={key} 
+          />
+        ) 
+      : (
+          <Layer 
+            {...childProps} 
+            layerKey={key} 
+            activateLayer={activateLayer} 
+            itemId={Id} 
+          />
+        );
+}
 
 const Layer = ({ 
-    Id,
+    itemId,
     children,
-    expanded,
     layerKey,
-    layerOrder,
     selected,
     title,
-    type
+    activateLayer
  }) => {
     const childNodes = children && children.length 
-        ? children.map((child) => {
-            const { key, ...childProps } = child;
-            return child.type === LayerTreeItemTypes.legend 
-                ? (<Legend {...childProps} legendKey={key} />) 
-                : (<Layer {...childProps} layerKey={key} />)
-        }) 
+        ? children.map(x => mapChildToComponent(x, activateLayer)) 
         : [];
     return (
-        <List.Accordion
+      <View style={styles.container}>
+        <LayerCheckbox 
+          itemId={itemId} 
+          selected={selected} 
+          activateLayer={activateLayer} 
+        />
+        <LayerRow
           title={title}
-          key={layerKey}
-          left={() => <Checkbox />}
-        >
-          {childNodes}
-        </List.Accordion>
+          layerKey={layerKey}
+          childNodes={childNodes}
+        />
+      </View>
     )
 }
 

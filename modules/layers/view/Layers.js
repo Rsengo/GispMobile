@@ -7,7 +7,19 @@ import Layer from './Layer';
 import { Appbar } from '../../app-bar';
 import { actions as rootActions } from '../../root';
 
-const Layers = ({ navigation, layersTree }) => {
+const mapLayerToComponent = (layer, activateLayer) => {
+    const { key, Id, ...childProps } = layer;
+    return (
+        <Layer 
+            {...childProps} 
+            layerKey={key} 
+            itemId={Id}
+            activateLayer={activateLayer} 
+        />
+    );
+}
+
+const Layers = ({ navigation, layersTree, activateLayer }) => {
     return (
         <View>
             <Appbar 
@@ -16,11 +28,9 @@ const Layers = ({ navigation, layersTree }) => {
             />
             <ScrollView>
                 <List.Section>
-                    {
-                        layersTree.map(x => {
-                            const { key, ...childProps } = x;
-                            return (<Layer {...childProps} layerKey={key} />);
-                        })
+                    { 
+                        layersTree.map(x => 
+                            mapLayerToComponent(x, activateLayer)) 
                     }
                 </List.Section>
             </ScrollView>
