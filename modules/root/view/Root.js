@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Navigator } from '../../navigator'
 import { actions as rootActions } from '../redux';
 import { ActivityIndicator } from 'react-native-paper';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styles from './Root.styles';
+import { Controls } from '../../map-controls';
+import { Map } from '../../map';
 
 const Spinner = () => (
     <View style={styles.spinner}>
@@ -13,11 +14,28 @@ const Spinner = () => (
     </View>
 );
 
-const Reload = ({message}) => (
-    <View style={styles.reload}>
-        <Text>{message}</Text>
+const Reload = ({message, onPress}) => {
+    const [open, setOpen] = React.useState(true);
+    return (
+        <View style={styles.reload}>
+            {/* TODO: reload, loop, car-engine-start */}
+            <Button icon="reload" mode="contained" onPress={onPress} />
+            <Snackbar
+              visible={open}
+              onDismiss={() => setOpen(false)}
+            >
+              {message}
+            </Snackbar>
+        </View>
+    );
+}
+
+const Main = () => (
+    <View style={styles.main}>
+        <Map />
+        <Controls />
     </View>
-)
+);
 
 class Root extends React.Component {
     componentWillMount() {
@@ -27,7 +45,7 @@ class Root extends React.Component {
         // this.reload();
     }
 
-    reload() {
+    reload = () => {
         const { loadMapManifest } = this.props;
         loadMapManifest();
     }
@@ -43,10 +61,10 @@ class Root extends React.Component {
         }
 
         if (error) {
-            return <Reload message={errorMessage} />;
+            return <Reload message={errorMessage} onPress={this.reload} />;
         }
 
-        return <Navigator />
+        return <Main />
     }
 }
 

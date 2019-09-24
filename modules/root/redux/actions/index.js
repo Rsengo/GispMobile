@@ -38,7 +38,7 @@ const activateLayer = (layerId, isActive) => (dispatch, getState) => {
         [ ...layersTree ], 
         layerId,
         isActive
-    );
+    ).sort();
     
     const listSublayerIds = layerTreeService.getListSublayerIds(layersTree, layerId);
     const listSublayersForUpdate = listSublayers.filter(x => listSublayerIds.includes(x.Id));

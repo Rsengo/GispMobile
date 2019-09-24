@@ -5,23 +5,6 @@ import Legend from './Legend';
 import { LayerTreeItemTypes } from '../../../constants';
 import styles from './Layer.styles';
 
-const LayerCheckbox = ({ itemId, selected, activateLayer }) => (
-  <View style={styles.checkboxContainer}>
-    <Checkbox 
-      status={selected ? 'checked' : 'unchecked'} 
-      onPress={() => activateLayer(itemId, !selected)}
-    />
-  </View>
-);
-
-const LayerRow = ({ title, layerKey, childNodes }) => (
-  <View style={styles.itemContainer}>
-    <List.Accordion title={title} key={layerKey}>
-      {childNodes}
-    </List.Accordion>
-  </View>
-);
-
 const mapChildToComponent = (child, activateLayer) => {
   const { key, Id, ...childProps } = child;
   return child.type === LayerTreeItemTypes.LEGEND 
@@ -40,6 +23,23 @@ const mapChildToComponent = (child, activateLayer) => {
           />
         );
 }
+
+const LayerCheckbox = ({ itemId, selected, activateLayer }) => (
+  <View style={styles.checkboxContainer}>
+    <Checkbox 
+      status={selected ? 'checked' : 'unchecked'} 
+      onPress={() => activateLayer(itemId, !selected)}
+    />
+  </View>
+);
+
+const LayerRow = ({ title, layerKey, childNodes }) => (
+  <View style={styles.itemContainer}>
+    <List.Accordion title={title} key={layerKey}>
+      {childNodes}
+    </List.Accordion>
+  </View>
+);
 
 const Layer = ({ 
     itemId,

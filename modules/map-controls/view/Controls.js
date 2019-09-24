@@ -1,22 +1,35 @@
 import React from 'react';
-import { FAB, Portal } from 'react-native-paper';
-import getActions from './Controls.actions';
+import { Dialog, Portal, FAB } from 'react-native-paper';
 import styles from './Controls.styles';
+import { Layers } from '../../layers';
 
-const Controls = ({ navigation }) => {
-  const [open, setOpen] = React.useState(false);
+const Controls = () => {
+  const [open, setOpen] = React.useState(true);
   return (
-    <Portal.Host>
-      <Portal>
-        <FAB.Group
-          open={open}
-          icon={open ? 'cancel' : 'settings'}
-          actions={getActions(navigation)}
-          fabStyle={styles.fab}
-          onStateChange={() => setOpen(!open)}
-        />
-      </Portal>
-    </Portal.Host>
+    <React.Fragment>
+      <Portal.Host>
+        <Portal>
+          <FAB
+            style={styles.fab}
+            small
+            icon="layers"
+            onPress={() => setOpen(true)}
+          />
+        </Portal>
+      </Portal.Host>
+      <Portal.Host>
+        <Portal>
+          <Dialog
+            visible={open}
+            onDismiss={() => setOpen(false)}
+          >
+            <Dialog.ScrollArea>
+              <Layers />
+            </Dialog.ScrollArea>
+          </Dialog>
+        </Portal>
+      </Portal.Host>
+    </React.Fragment>
   );
 };
 
