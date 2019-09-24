@@ -6,25 +6,22 @@ import { List } from 'react-native-paper';
 import Layer from './Layer';
 import { actions as rootActions } from '../../root';
 
-const mapLayerToComponent = (layer, activateLayer) => {
-    const { key, Id, ...childProps } = layer;
-    return (
-        <Layer 
-            {...childProps} 
-            layerKey={key} 
-            itemId={Id}
-            activateLayer={activateLayer} 
-        />
-    );
-}
-
 const Layers = ({ layersTree, activateLayer }) => {
     return (
         <ScrollView>
             <List.Section>
                 { 
-                    layersTree.map(x => 
-                        mapLayerToComponent(x, activateLayer)) 
+                    layersTree.map(x => {
+                        const { key, Id, ...childProps } = x;
+                        return (
+                            <Layer 
+                                {...childProps}
+                                layerKey={key} 
+                                itemId={Id}
+                                activateLayer={activateLayer} 
+                            />
+                        ) 
+                    })
                 }
             </List.Section>
         </ScrollView>
