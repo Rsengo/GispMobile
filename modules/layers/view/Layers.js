@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
 import Layer from './Layer';
 import { actions as rootActions } from '../../root';
