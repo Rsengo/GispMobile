@@ -30,7 +30,6 @@ const loadMapManifest = () => async (dispatch, _, extra) => {
 };
 
 const activateLayer = (layerId, isActive) => (dispatch, getState) => {
-    console.log(layerId);
     const state = getState();
     const { listSublayers, layersTree } = state.root;
     
@@ -41,6 +40,7 @@ const activateLayer = (layerId, isActive) => (dispatch, getState) => {
     ).sort();
     
     const listSublayerIds = layerTreeService.getListSublayerIds(layersTree, layerId);
+
     const listSublayersForUpdate = listSublayers.filter(x => listSublayerIds.includes(x.Id));
     const immutableListSublayers = listSublayers.filter(x => !listSublayerIds.includes(x.Id));
 

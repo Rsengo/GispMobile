@@ -2,9 +2,10 @@ import React from 'react';
 import { Dialog, Portal, FAB } from 'react-native-paper';
 import styles from './Controls.styles';
 import { Layers } from '../../layers';
+import { withTheme } from 'react-native-paper';
 
 const Controls = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   return (
     <React.Fragment>
       <Portal.Host>
@@ -33,4 +34,4 @@ const Controls = () => {
   );
 };
 
-export default Controls;
+export default withTheme(Controls);

@@ -16,11 +16,14 @@ const Map = ({ activeLayers }) => {
   return (
     <MapView 
       style={styles.map}
-      mapType={MAP_TYPES.SATELLITE}
+      mapType={MAP_TYPES.NONE}
     >
-      {activeLayers.map(layerInfo => (
-        <WMSTile urlTemplate={getWmsLayerUrl(layerInfo)} />
-      ))}
+      {activeLayers.map(layerInfo => {
+        const url = getWmsLayerUrl(layerInfo);
+        return (
+          <WMSTile urlTemplate={url} />
+        )
+      })}
     </MapView>
   );
 };

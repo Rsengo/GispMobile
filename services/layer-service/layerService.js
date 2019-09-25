@@ -1,5 +1,6 @@
+import { LayerTreeItemTypes } from '../../constants';
+
 const CHILDREN_PROP_NAMES = ['sublayers', 'children'];
-const LAYER_ID_PROP_NAME = 'layerId';
 
 const _getLayerListSublayers = (layer, setLayerId) => {
     const { Id: layerId } = layer;
@@ -21,6 +22,12 @@ const _getListLayers = (layer) => {
         return [layer];
     }
 
+    const filteredChildren = children.filter(x => x.type !== LayerTreeItemTypes.LEGEND);
+
+    if (!filteredChildren || !filteredChildren.length) {
+        return [layer];
+    }
+
     return children.map(x => _getListLayers(x)).flat();
 };
 
@@ -38,13 +45,14 @@ const getActive = (layers) => {
 
 const groupByTopLayer = (listSublayers) => {
     const groupObj = listSublayers.reduce((rv, x) => {
-        const val = x[key];
-        const layerProp = rv[val] || {
-            layerId: val,
+        const { layerId } = x;
+        const layerProp = rv[layerId] || {
+            layerId,
             sublayers: []
         };
         const { sublayers } = layerProp;
         sublayers.push(x);
+        rv[layerId] = layerProp;
         return rv;
     }, {});
 
