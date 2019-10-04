@@ -11,29 +11,41 @@ import { layersTreeService, layerService } from '../../../services';
 import { actions as rootActions } from '../../root';
 import { View, Text } from 'react-native';
 import { getWmsLayerUrl } from '../services/wmsService'
+import Axios from 'axios';
 
-const Map = ({ activeLayers }) => {
+const Map = ({ activeLayers, mapType }) => {
   return (
     <MapView 
       style={styles.map}
-      mapType={MAP_TYPES.NONE}
+      mapType={mapType}
+      provider={null}
     >
       {activeLayers.map(layerInfo => {
-        const url = getWmsLayerUrl(layerInfo);
         return (
-          <WMSTile urlTemplate={url} />
+          <WMSTile 
+            urlTemplate={getWmsLayerUrl(layerInfo)} 
+            tileSize={256}
+            zIndex={layerInfo.layerOrder}
+            opacity={1}
+          />
         )
       })}
     </MapView>
   );
 };
 
-const mapStateToProps = (state) => {
-  const { listSublayers } = state.root;
+const mapStateToProps = ({ root, map }) => {
+   const { listSublayers } = root;
   const activeSublayers = layerService.getActive(listSublayers);
-  const activeLayers = layerService.groupByTopLayer(activeSublayers);
+  // TODO:
+  const activeLayers = layerService.groupByTopLayer(activeSublayers).filter(x => x.layerId !== 47);
 
-  return { activeLayers }
+  const { mapType } = map;
+
+  return { 
+    activeLayers,
+    mapType
+  }
 };
 
 export default connect(mapStateToProps)(Map);

@@ -6,9 +6,13 @@ import {
   import thunk from 'redux-thunk';
 
 import { reducer as rootReducer } from '../../modules/root';
+import { reducer as mapReducer } from '../../modules/map';
+import { reducer as controlsReducer } from '../../modules/map-controls';
 
 const createReducer = () => combineReducers({
-  root: rootReducer
+  root: rootReducer,
+  map: mapReducer,
+  controls: controlsReducer
 });
 
 const configureStore = (extra) => {
