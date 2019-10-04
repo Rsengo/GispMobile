@@ -8,8 +8,6 @@ import MapView, {
   WMSTile,
 } from 'react-native-maps';
 import { layersTreeService, layerService } from '../../../services';
-import { actions as rootActions } from '../../root';
-import { View, Text } from 'react-native';
 import { getWmsLayerUrl } from '../services/wmsService'
 import Axios from 'axios';
 

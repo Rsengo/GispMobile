@@ -8,6 +8,7 @@ import styles from './Root.styles';
 import { Controls } from '../../map-controls';
 import { Map } from '../../map';
 import { Layers } from '../../layers'
+import SearchResult from '../../../tests/SearchResult';
 
 const Spinner = () => (
     <View style={styles.spinner}>
@@ -34,6 +35,7 @@ const Reload = ({message, onPress}) => {
 const Main = () => (
     <View style={styles.main}>
         <Map />
+        <SearchResult />
         <Controls />
         <Layers />
     </View>
