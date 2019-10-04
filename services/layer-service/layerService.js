@@ -3,7 +3,7 @@ import { LayerTreeItemTypes } from '../../constants';
 const CHILDREN_PROP_NAMES = ['sublayers', 'children'];
 
 const _getLayerListSublayers = (layer, setLayerId) => {
-    const { Id: layerId } = layer;
+    const { Id: layerId, layerOrder } = layer;
 
     var sublayers = _getListLayers(layer);
     
@@ -11,7 +11,7 @@ const _getLayerListSublayers = (layer, setLayerId) => {
         return sublayers;
     }
     
-    return sublayers.map(x => ({...x, layerId}));
+    return sublayers.map(x => ({...x, layerId, layerOrder}));
 };
 
 const _getListLayers = (layer) => {
@@ -45,9 +45,10 @@ const getActive = (layers) => {
 
 const groupByTopLayer = (listSublayers) => {
     const groupObj = listSublayers.reduce((rv, x) => {
-        const { layerId } = x;
+        const { layerId, layerOrder } = x;
         const layerProp = rv[layerId] || {
             layerId,
+            layerOrder,
             sublayers: []
         };
         const { sublayers } = layerProp;
