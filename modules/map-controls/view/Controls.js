@@ -1,37 +1,44 @@
 import React from 'react';
 import { Dialog, Portal, FAB } from 'react-native-paper';
-import styles from './Controls.styles';
-import { Layers } from '../../layers';
+import { styles, getFabStyles } from './Controls.styles';
 import { withTheme } from 'react-native-paper';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { actions as controlsActions } from '../redux';
 
-const Controls = () => {
-  const [open, setOpen] = React.useState(false);
+const Controls = ({ 
+  openLayersTreeDialog,
+  openMapTypeDialog,
+}) => {
   return (
-    <React.Fragment>
-      <Portal.Host>
-        <Portal>
-          <FAB
-            style={styles.fab}
-            small
-            icon="layers"
-            onPress={() => setOpen(true)}
-          />
-        </Portal>
-      </Portal.Host>
-      <Portal.Host>
-        <Portal>
-          <Dialog
-            visible={open}
-            onDismiss={() => setOpen(false)}
-          >
-            <Dialog.ScrollArea>
-              <Layers />
-            </Dialog.ScrollArea>
-          </Dialog>
-        </Portal>
-      </Portal.Host>
-    </React.Fragment>
+    <Portal.Host>
+      <Portal>
+        <FAB
+          style={getFabStyles(1)}
+          small
+          icon="layers"
+          onPress={() => openLayersTreeDialog(true)}
+        />
+        <FAB
+          style={getFabStyles(2)}
+          small
+          icon="settings"
+          onPress={() => openMapTypeDialog(true)}
+        />
+      </Portal>
+    </Portal.Host>
   );
 };
 
-export default withTheme(Controls);
+const mapStateToProps = () => {}
+
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+      ...controlsActions,
+  };
+  return bindActionCreators(actions, dispatch);
+}
+
+const ThemedControls = withTheme(Controls);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThemedControls);

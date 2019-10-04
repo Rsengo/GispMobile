@@ -7,6 +7,7 @@ import { View } from 'react-native';
 import styles from './Root.styles';
 import { Controls } from '../../map-controls';
 import { Map } from '../../map';
+import { Layers } from '../../layers'
 
 const Spinner = () => (
     <View style={styles.spinner}>
@@ -34,6 +35,7 @@ const Main = () => (
     <View style={styles.main}>
         <Map />
         <Controls />
+        <Layers />
     </View>
 );
 

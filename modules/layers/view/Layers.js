@@ -1,42 +1,46 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ScrollView } from 'react-native';
-import { List } from 'react-native-paper';
-import Layer from './Layer';
+import LayersList from './LayersList';
 import { actions as rootActions } from '../../root';
+import { actions as controlsActions } from '../../map-controls'
 
-const Layers = ({ layersTree, activateLayer }) => {
+const Layers = ({ 
+    layersTree, 
+    activateLayer,
+    layersTreeDialogIsOpened,
+    openLayersTreeDialog
+}) => {
     return (
-        <ScrollView>
-            <List.Section>
-                { 
-                    layersTree.map(x => {
-                        const { key, Id, ...childProps } = x;
-                        return (
-                            <Layer 
-                                {...childProps}
-                                layerKey={key} 
-                                itemId={Id}
-                                activateLayer={activateLayer} 
-                            />
-                        ) 
-                    })
-                }
-            </List.Section>
-        </ScrollView>
+        <Portal.Host>
+            <Portal>
+                <Dialog
+                visible={layersTreeDialogIsOpened}
+                onDismiss={() => openLayersTreeDialog(false)}
+                >
+                    <Dialog.ScrollArea>
+                        <LayersList layersTree={layersTree} activateLayer={activateLayer} />
+                    </Dialog.ScrollArea>
+                </Dialog>
+            </Portal>
+        </Portal.Host>
     );
 }
 
-const mapStateToProps = (state) => {
-    const { layersTree } = state.root;
+const mapStateToProps = ({ root, controls }) => {
+    const { layersTree } = root;
+    const { layersTreeDialogIsOpened } = controls;
     
-    return { layersTree }
+    return { 
+        layersTree,
+        layersTreeDialogIsOpened
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {
     const actions = {
-        ...rootActions
+        ...rootActions,
+        ...controlsActions
     };
     return bindActionCreators(actions, dispatch);
 }
