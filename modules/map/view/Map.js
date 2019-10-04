@@ -8,15 +8,13 @@ import MapView, {
   WMSTile,
 } from 'react-native-maps';
 import { layersTreeService, layerService } from '../../../services';
-import { actions as rootActions } from '../../root';
-import { View, Text } from 'react-native';
 import { getWmsLayerUrl } from '../services/wmsService'
 
 const Map = ({ activeLayers }) => {
   return (
     <MapView 
       style={styles.map}
-      mapType={MAP_TYPES.NONE}
+      mapType={MAP_TYPES.SATELLITE}
     >
       {activeLayers.map(layerInfo => {
         const url = getWmsLayerUrl(layerInfo);

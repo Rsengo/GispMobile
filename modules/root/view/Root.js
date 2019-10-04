@@ -7,6 +7,7 @@ import { View } from 'react-native';
 import styles from './Root.styles';
 import { Controls } from '../../map-controls';
 import { Map } from '../../map';
+import SearchResult from '../../../tests/SearchResult';
 
 const Spinner = () => (
     <View style={styles.spinner}>
@@ -33,6 +34,7 @@ const Reload = ({message, onPress}) => {
 const Main = () => (
     <View style={styles.main}>
         <Map />
+        <SearchResult />
         <Controls />
     </View>
 );

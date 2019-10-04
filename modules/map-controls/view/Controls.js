@@ -3,6 +3,7 @@ import { Dialog, Portal, FAB } from 'react-native-paper';
 import styles from './Controls.styles';
 import { Layers } from '../../layers';
 import { withTheme } from 'react-native-paper';
+import SearchResult from '../../../tests/SearchResult'
 
 const Controls = () => {
   const [open, setOpen] = React.useState(false);
