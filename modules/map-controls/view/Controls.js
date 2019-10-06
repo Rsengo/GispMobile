@@ -30,7 +30,7 @@ const Controls = ({
   );
 };
 
-const mapStateToProps = () => {}
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch) => {
   const actions = {

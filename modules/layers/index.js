@@ -1,3 +1,1 @@
-import Layers from './view/Layers';
-
-export { Layers }
+export { default as Layers } from './view/Layers';

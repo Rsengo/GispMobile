@@ -8,6 +8,6 @@ const getFabStyles = (num) => ({
     position: 'absolute',
     right: 5,
     bottom: 5 * (num + 1)
-})
+});
 
-export default { styles, getFabStyles };
+export { styles, getFabStyles };

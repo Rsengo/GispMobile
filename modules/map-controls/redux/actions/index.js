@@ -4,11 +4,11 @@ const ActionTypes = {
 };
 
 const openLayersTreeDialog = (val) => (dispatch) => {
-    dispatch({ type: OPEN_LAYERS_TREE_DIALOG, payload: val });
+    dispatch({ type: ActionTypes.OPEN_LAYERS_TREE_DIALOG, payload: val });
 };
 
 const openMapTypeDialog = (val) => (dispatch) => {
-    dispatch({ type: OPEN_MAP_TYPE_DIALOG, payload: val });
+    dispatch({ type: ActionTypes.OPEN_MAP_TYPE_DIALOG, payload: val });
 };
 
 export {
