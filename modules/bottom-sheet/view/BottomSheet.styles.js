@@ -17,8 +17,11 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       backgroundColor: '#00000040',
       marginBottom: 10,
+    },
+    bodyContainer: {
+      flex: 1,
+      backgroundColor: '#fff'
     }
 });
 
 export default styles;
-

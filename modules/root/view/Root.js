@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as rootActions } from '../redux';
 import { ActivityIndicator } from 'react-native-paper';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import styles from './Root.styles';
 import { Controls } from '../../map-controls';
 import { Map } from '../../map';
 import { Layers } from '../../layers'
+import { SearchResult } from '../../search';
+import { Portal } from 'react-native-paper';
 
 const Spinner = () => (
     <View style={styles.spinner}>
@@ -34,8 +36,20 @@ const Reload = ({message, onPress}) => {
 const Main = () => (
     <View style={styles.main}>
         <Map />
-        <Controls />
+
         <Layers />
+
+        <Portal.Host>
+            <Portal>
+                <Controls />
+            </Portal>
+        </Portal.Host>
+
+        <Portal.Host>
+            <Portal>
+                <SearchResult />
+            </Portal>
+        </Portal.Host>      
     </View>
 );
 

@@ -1,7 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
-import { default as ReanimatedBottomSheet } from 'reanimated-bottom-sheet';
+import { View, ScrollView } from 'react-native';
 import styles from './BottomSheet.styles';
+import Modal, {
+  ModalContent,
+  SlideAnimation,
+} from 'react-native-modals';
 
 const Header = () => (
     <View style={styles.header}>
@@ -11,25 +14,31 @@ const Header = () => (
     </View>
 );
 
-class BottomSheet extends React.Component {
-  bs = React.createRef()
+const animation = new SlideAnimation({
+  slideFrom: 'bottom',
+});
 
-  render() {
-    const { children } = this.props;
-
-    return (
-        <ReanimatedBottomSheet
-          ref={this.bs}
-          snapPoints={[600, 180, 0]}
-          renderContent={() => (<View>{children}</View>)}
-          renderHeader={Header}
-          initialSnap={1}
-          enabledContentGestureInteraction={false}
-          enabledInnerScrolling={true}
-          enabledContentTapInteraction={false}
-        />
-    )
-  }
-}
+const BottomSheet = ({ children, scrollable, isOpen, onClose }) => {
+  const Container = scrollable ? ScrollView : View;
+  return (
+    <Modal.BottomModal
+      visible={isOpen}
+      onTouchOutside={onClose}
+      onSwipeOut={onClose}
+      height={0.7}
+      width={1}
+      modalTitle={<Header />}
+      modalAnimation={animation}
+    >
+      <ModalContent
+        style={styles.bodyContainer}
+      >
+        <Container>
+          {children}
+        </Container>
+      </ModalContent>
+    </Modal.BottomModal>
+  )
+};
 
 export default BottomSheet;

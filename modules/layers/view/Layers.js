@@ -4,33 +4,40 @@ import LayersList from './LayersList'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as rootActions } from '../../root';
-import { actions as controlsActions } from '../../map-controls'
+import { actions as controlsActions } from '../../map-controls'  
 
-const Layers = ({ 
-  layersTree, 
-  activateLayer,
-  layersTreeDialogIsOpened,
-  openLayersTreeDialog
-}) => (
-  <BottomSheet>
-    <LayersList layersTree={layersTree} activateLayer={activateLayer} />
-  </BottomSheet>
-)
+class Layers extends React.Component {
+    render() {
+        const { 
+            layersTree, 
+            activateLayer,
+            isOpen,
+            onClose
+        } = this.props;
+        return (
+            <BottomSheet scrollable isOpen={isOpen} onClose={onClose}>
+                <LayersList layersTree={layersTree} activateLayer={activateLayer} />
+            </BottomSheet>
+        );
+    }
+}
 
 const mapStateToProps = ({ root, controls }) => {
   const { layersTree } = root;
-  const { layersTreeDialogIsOpened } = controls;
+  const { layersTreeDialogIsOpened: isOpen } = controls;
   
   return { 
       layersTree,
-      layersTreeDialogIsOpened
+      isOpen
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
-  const actions = {
+    const { openLayersTreeDialog } = controlsActions;
+    const actions = {
       ...rootActions,
-      ...controlsActions
+      ...controlsActions,
+      onClose: () => openLayersTreeDialog(false)
   };
   return bindActionCreators(actions, dispatch);
 }

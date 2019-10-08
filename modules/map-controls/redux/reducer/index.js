@@ -11,6 +11,9 @@ const reducer = (state=initialState, action) => {
         case ActionTypes.OPEN_MAP_TYPE_DIALOG:
             return { ...state, mapTypeDialogIsOpened: payload };
 
+        case ActionTypes.OPEN_SEARCH_RESULTS:
+            return { ...state, searchResultsIsOpen: payload };
+
         default:
             return { ...state };
     }

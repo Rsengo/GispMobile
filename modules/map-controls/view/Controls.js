@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, Portal, FAB } from 'react-native-paper';
+import { FAB } from 'react-native-paper';
 import { styles, getFabStyles } from './Controls.styles';
 import { withTheme } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
@@ -9,28 +9,47 @@ import { actions as controlsActions } from '../redux';
 const Controls = ({ 
   openLayersTreeDialog,
   openMapTypeDialog,
+  openSearchResults,
+  searchResultsIsOpen
 }) => {
   return (
-    <Portal.Host>
-      <Portal>
-        <FAB
-          style={getFabStyles(1)}
-          small
-          icon="layers"
-          onPress={() => openLayersTreeDialog(true)}
-        />
-        <FAB
-          style={getFabStyles(2)}
-          small
-          icon="settings"
-          onPress={() => openMapTypeDialog(true)}
-        />
-      </Portal>
-    </Portal.Host>
+    <React.Fragment>
+      <FAB
+        visible={!searchResultsIsOpen}
+        style={styles.first}
+        small
+        icon="layers"
+        onPress={() => openLayersTreeDialog(1)}
+      />
+      <FAB
+        visible={!searchResultsIsOpen}
+        style={styles.second}
+        small
+        icon="map"
+        onPress={() => openMapTypeDialog(true)}
+      />
+      <FAB
+        style={styles.third}
+        small
+        icon="search"
+        onPress={() => openSearchResults(!searchResultsIsOpen)}
+      />
+      <FAB
+        style={styles.fourth}
+        small
+        icon="settings"
+      />
+    </React.Fragment>
   );
 };
 
-const mapStateToProps = () => ({})
+const mapStateToProps = ({ controls }) => {
+  const { searchResultsIsOpen } = controls;
+
+  return {
+    searchResultsIsOpen
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   const actions = {

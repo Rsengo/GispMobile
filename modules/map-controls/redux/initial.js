@@ -1,8 +1,7 @@
-import { MAP_TYPES } from 'react-native-maps';
-
 const initialState = {
     layersTreeDialogIsOpened: false,
-    mapTypeDialogIsOpened: false
+    mapTypeDialogIsOpened: false,
+    searchResultsIsOpen: false
 };
 
 export default initialState;
