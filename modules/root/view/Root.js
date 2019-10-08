@@ -10,6 +10,7 @@ import { Map } from '../../map';
 import { Layers } from '../../layers'
 import { SearchResult } from '../../search';
 import { Portal } from 'react-native-paper';
+import { MapTypes } from '../../map-types';
 
 const Spinner = () => (
     <View style={styles.spinner}>
@@ -38,6 +39,12 @@ const Main = () => (
         <Map />
 
         <Layers />
+
+        <Portal.Host>
+            <Portal>
+                <MapTypes />
+            </Portal>
+        </Portal.Host>
 
         <Portal.Host>
             <Portal>

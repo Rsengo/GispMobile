@@ -35,6 +35,7 @@ const Controls = ({
         onPress={() => openSearchResults(!searchResultsIsOpen)}
       />
       <FAB
+        visible={!searchResultsIsOpen}
         style={styles.fourth}
         small
         icon="settings"

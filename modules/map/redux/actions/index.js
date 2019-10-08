@@ -3,7 +3,7 @@ const ActionTypes = {
 };
 
 const changeMapType = (type) => (dispatch) => {
-    dispatch({ type: CHANGE_MAP_TYPE, payload: type });
+    dispatch({ type: ActionTypes.CHANGE_MAP_TYPE, payload: type });
 };
 
 export {
