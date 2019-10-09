@@ -5,7 +5,9 @@ const styles = {
     },
     itemContainer: {
         display: 'flex', 
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width: '100%', 
+        height: 250
     },
     img: {
         width: 300, 

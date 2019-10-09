@@ -8,6 +8,9 @@ const reducer = (state=initialState, action) => {
         case ActionTypes.CHANGE_MAP_TYPE:
             return { ...state, mapType: payload };
 
+        case ActionTypes.CHANGE_MAP_TYPE:
+            return { ...state, mapType: payload };
+
         default:
             return { ...state };
     }
