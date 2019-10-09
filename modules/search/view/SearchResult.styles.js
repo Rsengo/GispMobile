@@ -7,7 +7,8 @@ const styles = {
         display: 'flex', 
         flexDirection: 'column',
         width: '100%', 
-        height: 250
+        height: 250,
+        backgroundColor: '#fff'
     },
     img: {
         width: 300, 

@@ -12,16 +12,16 @@ const entries = [
 
 const DEFAULT_ITEM_NAME = 'Без названия';
 
-const SearchResult = ({ searchResultsIsOpen, data }) => {
+const SearchResult = ({ searchResultsIsOpen, searchData }) => {
     return(
-        searchResultsIsOpen ? (<SearchResultView data={data} />) : null
+        searchResultsIsOpen ? (<SearchResultView data={searchData} />) : null
     );
 };
 
-const SearchResultView = ({ searchData }) => (
+const SearchResultView = ({ data }) => (
     <View style={styles.container}>
         <Carousel
-            data={searchData}
+            data={data}
             renderItem={SearchResultItem}
             sliderWidth={Dimensions.get('window').width}
             itemWidth={300}
@@ -38,7 +38,7 @@ const SearchResultItem = ({ item }) => {
             <Headline>{attributes[displayFieldName] || DEFAULT_ITEM_NAME}</Headline>
             {
                 attrKeys.map(attrKey => {
-                    const attrVal = attributes[attrKey];
+                    const attrVal = attributes[attrKey] || '<Не задано>';
                     const attrInfo = `${attrKey}: ${attrVal}`;
                     
                     return (

@@ -8,8 +8,8 @@ const changeMapType = (type) => (dispatch) => {
     dispatch({ type: ActionTypes.CHANGE_MAP_TYPE, payload: type });
 };
 
-const search = (coordinate) => (dispatch, _, { api }) => {
-
+const searchOnMap = (coordinate) => async (dispatch, _, extra) => {
+    const { api } = extra;
     const { success, data: payload, errorMessage } = await api.map.search(coordinate);
 
     if (success) {
@@ -22,5 +22,5 @@ const search = (coordinate) => (dispatch, _, { api }) => {
 export {
     ActionTypes,
     changeMapType,
-    search
+    searchOnMap
 };

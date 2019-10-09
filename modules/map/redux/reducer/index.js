@@ -8,8 +8,10 @@ const reducer = (state=initialState, action) => {
         case ActionTypes.CHANGE_MAP_TYPE:
             return { ...state, mapType: payload };
 
-        case ActionTypes.CHANGE_MAP_TYPE:
-            return { ...state, mapType: payload };
+        case ActionTypes.SEARCH_SUCCESS:
+            return { ...state, searchData: payload };
+
+        //TODO: expection on error
 
         default:
             return { ...state };

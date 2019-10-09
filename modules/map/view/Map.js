@@ -2,35 +2,43 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styles from './Map.styles';
-import MapView, {
-  MAP_TYPES,
-  ProviderPropType,
-  WMSTile,
-} from 'react-native-maps';
-import { layersTreeService, layerService } from '../../../services';
-import { getWmsLayerUrl } from '../services/wmsService'
-import Axios from 'axios';
+import MapView, { WMSTile } from 'react-native-maps';
+import { layerService } from '../../../services';
+import { getWmsLayerUrl } from '../services/wmsService';
+import { actions as mapActions } from '../redux';
+import { actions as controlsActions } from '../../map-controls';
 
-const Map = ({ activeLayers, mapType }) => {
-  return (
-    <MapView 
-      style={styles.map}
-      mapType={mapType}
-      provider={null}
-    >
-      {activeLayers.map(layerInfo => {
-        return (
-          <WMSTile 
-            urlTemplate={getWmsLayerUrl(layerInfo)} 
-            tileSize={256}
-            zIndex={layerInfo.layerOrder}
-            opacity={1}
-          />
-        )
-      })}
-    </MapView>
-  );
-};
+class Map extends React.Component {
+  search = (coordinate) => {
+    const { searchOnMap, openSearchResults } = this.props;
+    
+    searchOnMap(coordinate);
+    openSearchResults(true);
+  }
+
+  render() {
+    const { activeLayers, mapType } = this.props;
+    return (
+      <MapView 
+        style={styles.map}
+        mapType={mapType}
+        provider={null}
+        onPress={this.search}
+      >
+        {activeLayers.map(layerInfo => {
+          return (
+            <WMSTile 
+              urlTemplate={getWmsLayerUrl(layerInfo)} 
+              tileSize={256}
+              zIndex={layerInfo.layerOrder}
+              opacity={1}
+            />
+          )
+        })}
+      </MapView>
+    );
+  }
+}
 
 const mapStateToProps = ({ root, map }) => {
    const { listSublayers } = root;
@@ -46,4 +54,13 @@ const mapStateToProps = ({ root, map }) => {
   }
 };
 
-export default connect(mapStateToProps)(Map);
+const mapDispatchToProps = (dispatch) => {
+  const actions = {
+    ...mapActions,
+    ...controlsActions
+  }
+
+  return bindActionCreators(actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
