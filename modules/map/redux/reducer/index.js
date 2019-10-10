@@ -13,6 +13,9 @@ const reducer = (state=initialState, action) => {
 
         //TODO: expection on error
 
+        case ActionTypes.HIGHLIGHT_GEOMETRY:
+            return { ...state, geoJson: payload };
+
         default:
             return { ...state };
     }

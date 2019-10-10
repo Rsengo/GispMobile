@@ -2,21 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styles from './Map.styles';
-import MapView, { WMSTile } from 'react-native-maps';
+import MapView, { WMSTile, Marker } from 'react-native-maps';
 import { layerService } from '../../../services';
 import { getWmsLayerUrl } from '../services/wmsService';
 import { actions as mapActions } from '../redux';
 import { actions as controlsActions } from '../../map-controls';
+import Geojson from './Geojson';
 
 class Map extends React.Component {
   search = (coordinate) => {
+    console.log('aaaaa: ' + JSON.stringify(coordinate));
     const { searchOnMap, openSearchResults } = this.props;
     searchOnMap(coordinate);
     openSearchResults(true);
   }
 
   render() {
-    const { activeLayers, mapType } = this.props;
+    const { activeLayers, mapType, geoJson } = this.props;
+    console.log('gjs:' + JSON.stringify(geoJson) );
     return (
       <MapView 
         style={styles.map}
@@ -24,17 +27,21 @@ class Map extends React.Component {
         provider={null}
         onPress={this.search}
       >
-        {activeLayers.map(({ layerId, sublayers, layerOrder }) => {
-          return (
-            <WMSTile 
-              key={layerId}
-              urlTemplate={getWmsLayerUrl(layerId, sublayers)} 
-              tileSize={256}
-              zIndex={layerOrder}
-              opacity={1}
-            />
-          )
-        })}
+        {
+          activeLayers.map(({ layerId, sublayers, layerOrder }) => {
+            return (
+              <WMSTile 
+                key={layerId}
+                urlTemplate={getWmsLayerUrl(layerId, sublayers)} 
+                tileSize={256}
+                zIndex={layerOrder}
+                opacity={1}
+              />
+            )
+          })
+        }
+        <Marker coordinate={{"latitude":8588107.02782723,"longitude":8589964.70669922}} /> 
+        {geoJson ? <Geojson geojson={geoJson} color={'#000000'} strokeWidth={10} fillColor={'#000000'} strokeColor={'#000000'} /> : null}
       </MapView>
     );
   }
@@ -46,11 +53,9 @@ const mapStateToProps = ({ root, map }) => {
   // TODO:
   const activeLayers = layerService.groupByTopLayer(activeSublayers).filter(x => x.layerId !== 47);
 
-  const { mapType } = map;
-
   return { 
+    ...map,
     activeLayers,
-    mapType
   }
 };
 

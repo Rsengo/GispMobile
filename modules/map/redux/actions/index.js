@@ -1,7 +1,10 @@
+import WKT from 'terraformer-wkt-parser';
+
 const ActionTypes = {
     CHANGE_MAP_TYPE: 'map/CHANGE_MAP_TYPE',
     SEARCH_SUCCESS: 'map/SEARCH_SUCCESS',
-    SEARCH_ERROR: 'map/SEARCH_ERROR'
+    SEARCH_ERROR: 'map/SEARCH_ERROR',
+    HIGHLIGHT_GEOMETRY: 'map/HIGHLIGHT_GEOMETRY'
 };
 
 const changeMapType = (type) => (dispatch) => {
@@ -17,10 +20,38 @@ const searchOnMap = (coordinate) => async (dispatch, _, extra) => {
     } else {
         dispatch({ type: ActionTypes.SEARCH_ERROR, payload: errorMessage });
     }
-}
+};
+
+const highlightGeometry = (wkt) => (dispatch) => { 
+    console.log('wkt: ', wkt);
+
+    if (!wkt) {
+        dispatch({ type: ActionTypes.HIGHLIGHT_GEOMETRY, payload: null });
+        return;
+    }
+
+    const geom = WKT.parse(wkt);
+    const { type, coordinates } = geom;
+    const geoJson = {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type,
+                    coordinates
+                }
+            }
+        ]
+    };
+
+    dispatch({ type: ActionTypes.HIGHLIGHT_GEOMETRY, payload: geoJson })
+}; 
 
 export {
     ActionTypes,
     changeMapType,
-    searchOnMap
+    searchOnMap,
+    highlightGeometry
 };
