@@ -43,10 +43,12 @@ class MapTypes extends React.Component {
                 <Dialog.Title>Тип карты</Dialog.Title>
                 <Dialog.Content>
                     {
-                        entries.map(entry => {
+                        entries.map((entry, idx) => {
                             const { title, type, img } = entry;
                             return (
-                                <Chip style={styles.chip}
+                                <Chip 
+                                    key={idx}
+                                    style={styles.chip}
                                     avatar={
                                         <Avatar.Image 
                                             style={styles.avatar} 

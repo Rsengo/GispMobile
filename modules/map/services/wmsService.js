@@ -10,7 +10,7 @@ const CRS = 'EPSG:3857';
 const STYLES = '';
 const FORMAT_OPTIONS = 'dpi:72'; 
 
-const getWmsLayerUrl = ({ layerId, sublayers }) => {
+const getWmsLayerUrl = (layerId, sublayers) => {
     const layerNames = sublayers.map(x => x.name).join();
     return `${PROXY_URL}/${layerId}` +
         `?SERVICE=${SERVICE}` +

@@ -11,7 +11,6 @@ import { actions as controlsActions } from '../../map-controls';
 class Map extends React.Component {
   search = (coordinate) => {
     const { searchOnMap, openSearchResults } = this.props;
-    
     searchOnMap(coordinate);
     openSearchResults(true);
   }
@@ -25,12 +24,13 @@ class Map extends React.Component {
         provider={null}
         onPress={this.search}
       >
-        {activeLayers.map(layerInfo => {
+        {activeLayers.map(({ layerId, sublayers, layerOrder }) => {
           return (
             <WMSTile 
-              urlTemplate={getWmsLayerUrl(layerInfo)} 
+              key={layerId}
+              urlTemplate={getWmsLayerUrl(layerId, sublayers)} 
               tileSize={256}
-              zIndex={layerInfo.layerOrder}
+              zIndex={layerOrder}
               opacity={1}
             />
           )

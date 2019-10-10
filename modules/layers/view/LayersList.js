@@ -13,6 +13,7 @@ const LayersList = ({ layersTree, activateLayer }) => {
                             {...childProps}
                             layerKey={key} 
                             itemId={Id}
+                            key={key}
                             activateLayer={activateLayer} 
                         />
                     ) 

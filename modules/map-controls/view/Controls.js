@@ -10,7 +10,9 @@ const Controls = ({
   openLayersTreeDialog,
   openMapTypeDialog,
   openSearchResults,
-  searchResultsIsOpen
+  searchResultsIsOpen,
+  mapTypeDialogIsOpened,
+  layersTreeDialogIsOpened
 }) => {
   return (
     <React.Fragment>
@@ -19,14 +21,14 @@ const Controls = ({
         style={styles.first}
         small
         icon="layers"
-        onPress={() => openLayersTreeDialog(1)}
+        onPress={() => openLayersTreeDialog(!layersTreeDialogIsOpened)}
       />
       <FAB
         visible={!searchResultsIsOpen}
         style={styles.second}
         small
         icon="map"
-        onPress={() => openMapTypeDialog(true)}
+        onPress={() => openMapTypeDialog(!mapTypeDialogIsOpened)}
       />
       <FAB
         style={styles.third}
@@ -45,10 +47,8 @@ const Controls = ({
 };
 
 const mapStateToProps = ({ controls }) => {
-  const { searchResultsIsOpen } = controls;
-
   return {
-    searchResultsIsOpen
+    ...controls
   }
 }
 

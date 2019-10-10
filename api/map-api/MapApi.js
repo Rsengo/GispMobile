@@ -8,11 +8,11 @@ class MapApi extends BaseApi {
     }
 
     async getMapManifest() {
-        return await new Promise(resolve => setTimeout(() => resolve(new ApiResponse(true, mapManifest)), 3000));
+        return await new Promise(resolve => setTimeout(() => resolve(new ApiResponse(true, mapManifest)), 0));
     }
 
     async search(coordinate) {
-        return await new Promise(resolve => setTimeout(() => resolve(new ApiResponse(true, searchResult.foundObjects)), 3000));
+        return await new Promise(resolve => setTimeout(() => resolve(new ApiResponse(true, searchResult.foundObjects)), 0));
     }
 }
 

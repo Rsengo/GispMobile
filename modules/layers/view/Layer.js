@@ -12,12 +12,14 @@ const mapChildToComponent = (child, activateLayer) => {
           <Legend 
             {...childProps} 
             legendKey={key} 
+            key={key}
           />
         ) 
       : (
           <Layer 
             {...childProps} 
-            layerKey={key} 
+            layerKey={key}
+            key={key} 
             activateLayer={activateLayer} 
             itemId={Id} 
           />

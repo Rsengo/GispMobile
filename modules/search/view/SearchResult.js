@@ -1,14 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Text, Dimensions } from 'react-native';
+import { View, ScrollView, Image, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import styles from './SearchResult.styles';
-import { Headline, Paragraph } from 'react-native-paper';
-
-const entries = [
-    {title: 'standard', img: require('../../../assets/map-types/standard.png')},
-    {title: 'satellite', img: require('../../../assets/map-types/satellite.png')},
-];
+import { Headline, Paragraph, Caption, Button, Dialog } from 'react-native-paper';
+import SearchItemAttributesDialog from './SearchItemAttributesDialog';
 
 const DEFAULT_ITEM_NAME = 'Без названия';
 
@@ -18,35 +14,54 @@ const SearchResult = ({ searchResultsIsOpen, searchData }) => {
     );
 };
 
-const SearchResultView = ({ data }) => (
-    <View style={styles.container}>
-        <Carousel
-            data={data}
-            renderItem={SearchResultItem}
-            sliderWidth={Dimensions.get('window').width}
-            itemWidth={300}
-        />
-    </View>
-);
+const SearchResultView = ({ data }) => {
+    const [state, setState] = React.useState({ dialogOpened: false, attrs: {} });
+    const closeDialog = () => setState({ ...state, dialogOpened: false });
+    const openDialog = (attrs) => setState({ ...setState, dialogOpened: true, attrs }) 
 
-const SearchResultItem = ({ item }) => {
-    const { attributes, displayFieldName } = item;
-    const attrKeys = Object.keys(attributes);
-
+    const { dialogOpened, attrs } = state;
     return (
-        <ScrollView style={styles.itemContainer}>
-            <Headline>{attributes[displayFieldName] || DEFAULT_ITEM_NAME}</Headline>
-            {
-                attrKeys.map(attrKey => {
-                    const attrVal = attributes[attrKey] || '<Не задано>';
-                    const attrInfo = `${attrKey}: ${attrVal}`;
-                    
-                    return (
-                        <Paragraph>{attrInfo}</Paragraph>
-                    );
-                })
-            }
-        </ScrollView>
+        <React.Fragment>
+            <View style={styles.container}>
+                <Carousel
+                    data={data}
+                    renderItem={({item}) => <SearchResultItem item={item} openDialog={openDialog} />}
+                    sliderWidth={Dimensions.get('window').width}
+                    itemWidth={300}
+                />
+            </View>
+            <SearchItemAttributesDialog 
+                isVisible={dialogOpened} 
+                onClose={closeDialog}
+                attributes={attrs} 
+            />
+        </React.Fragment>
+    );
+};
+
+const SearchResultItem = ({ item, openDialog }) => {
+    const { 
+        attributes, 
+        displayFieldName, 
+        layerName, 
+        sublayerName 
+    } = item;
+    return (
+            <View style={styles.itemContainer}>
+                <View style={styles.itemContent}>
+                    <Headline>{attributes[displayFieldName] || DEFAULT_ITEM_NAME}</Headline>
+                    <Caption>{layerName}</Caption>
+                    <Caption>{sublayerName}</Caption>
+                </View>
+                <View style={styles.itemActions}>
+                    <Button 
+                        mode="outlined" 
+                        onPress={() => openDialog(attributes)}
+                    >
+                        Показать свойства
+                    </Button>
+                </View>
+            </View>
     )
 };
 
