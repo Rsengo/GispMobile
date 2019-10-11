@@ -10,7 +10,8 @@ import { actions as controlsActions } from '../../map-controls';
 import Geojson from './Geojson';
 
 class Map extends React.Component {
-  search = (coordinate) => {
+  search = (e) => {
+    const { coordinate } = e;
     console.log('aaaaa: ' + JSON.stringify(coordinate));
     const { searchOnMap, openSearchResults } = this.props;
     searchOnMap(coordinate);
@@ -25,7 +26,7 @@ class Map extends React.Component {
         style={styles.map}
         mapType={mapType}
         provider={null}
-        onPress={this.search}
+        onPress={({nativeEvent}) => this.search(nativeEvent)}
       >
         {
           activeLayers.map(({ layerId, sublayers, layerOrder }) => {
@@ -40,7 +41,6 @@ class Map extends React.Component {
             )
           })
         }
-        <Marker coordinate={{"latitude":8588107.02782723,"longitude":8589964.70669922}} /> 
         {geoJson ? <Geojson geojson={geoJson} color={'#000000'} strokeWidth={10} fillColor={'#000000'} strokeColor={'#000000'} /> : null}
       </MapView>
     );

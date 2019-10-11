@@ -40,7 +40,7 @@ const highlightGeometry = (wkt) => (dispatch) => {
                 properties: {},
                 geometry: {
                     type,
-                    coordinates
+                    coordinates: [60.94510864566641, 76.49607371538877]
                 }
             }
         ]
