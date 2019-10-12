@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import { Paragraph, Dialog } from 'react-native-paper';
+import { ScrollView, View } from 'react-native';
+import { Paragraph, Dialog, Divider } from 'react-native-paper';
+import styles from './SearchItemAttributesDialog.styles';
 
 const DEFAULT_ATTR_VALUE = '<Не задано>';
 
@@ -20,7 +21,10 @@ const SearchItemAttributesDialog = ({isVisible, onClose, attributes}) => {
                             const attrInfo = `${attrKey}: ${attrVal}`;
                         
                             return (
-                                <Paragraph key={attrKey}>{attrInfo}</Paragraph>
+                                <View style={styles.attributeContainer}>
+                                    <Paragraph key={attrKey}>{attrInfo}</Paragraph>
+                                    <Divider />
+                                </View>
                             );
                         })
                     }

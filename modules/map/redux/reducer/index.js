@@ -16,6 +16,9 @@ const reducer = (state=initialState, action) => {
         case ActionTypes.HIGHLIGHT_GEOMETRY:
             return { ...state, geoJson: payload };
 
+        case ActionTypes.CHANGE_REGION:
+            return { ...state, region: payload };
+
         default:
             return { ...state };
     }

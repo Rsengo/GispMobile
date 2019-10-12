@@ -12,20 +12,20 @@ import Geojson from './Geojson';
 class Map extends React.Component {
   search = (e) => {
     const { coordinate } = e;
-    console.log('aaaaa: ' + JSON.stringify(coordinate));
     const { searchOnMap, openSearchResults } = this.props;
     searchOnMap(coordinate);
     openSearchResults(true);
   }
 
   render() {
-    const { activeLayers, mapType, geoJson } = this.props;
-    console.log('gjs:' + JSON.stringify(geoJson) );
+    const { activeLayers, mapType, geoJson, changeRegion, region } = this.props;
     return (
       <MapView 
         style={styles.map}
         mapType={mapType}
         provider={null}
+        region={region}
+        onRegionChangeComplete={changeRegion}
         onPress={({nativeEvent}) => this.search(nativeEvent)}
       >
         {
@@ -41,7 +41,14 @@ class Map extends React.Component {
             )
           })
         }
-        {geoJson ? <Geojson geojson={geoJson} color={'#000000'} strokeWidth={10} fillColor={'#000000'} strokeColor={'#000000'} /> : null}
+        {geoJson 
+          ? <Geojson 
+            geojson={geoJson} 
+            color={'#000000'} 
+            strokeWidth={3} 
+            fillColor={'#0000ff04'} 
+            strokeColor={'#000000'} /> 
+          : null}
       </MapView>
     );
   }

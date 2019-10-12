@@ -43,6 +43,24 @@ class SearchResultView extends React.Component {
         attrs 
     });
 
+    hightlightFirstItem = () => {
+        const { data, highlightGeometry } = this.props;
+
+        if (!data || !data.length) {
+            return;
+        }
+
+        highlightGeometry(data[0].geometry);
+    }
+
+    componentDidUpdate() {
+        this.hightlightFirstItem();
+    }
+
+    componentDidMount() {
+        this.hightlightFirstItem();
+    }
+
     componentWillUnmount() {
         const { highlightGeometry } = this.props;
         highlightGeometry(null);
@@ -59,6 +77,7 @@ class SearchResultView extends React.Component {
                         renderItem={({item}) => <SearchResultItem item={item} openDialog={this.openDialog} />}
                         sliderWidth={Dimensions.get('window').width}
                         itemWidth={300}
+                        lockScrollWhileSnapping={true}
                         onSnapToItem={(slideIndex) => {
                             console.log(slideIndex);
                             highlightGeometry(data[slideIndex].geometry);

@@ -13,12 +13,10 @@ export const makeOverlays = features => {
         makeOverlay(coordinates, feature)
       )
     );
-    console.log('pk1: ' + JSON.stringify(points1));
 
     const points = points1.reduce(flatten, [])
     .map(overlay => ({ ...overlay, type: 'point' }));
 
-    console.log('pk2: ' + JSON.stringify(points));
 
   const lines = features
     .filter(
@@ -57,7 +55,6 @@ export const makeOverlays = features => {
 const flatten = (prev, curr) => prev.concat(curr);
 
 const makeOverlay = (coordinates, feature) => {
-  console.log('2: ' + JSON.stringify(coordinates))
   let overlay = {
     feature,
   };
@@ -82,7 +79,6 @@ const makeLine = l => l.map(makePoint);
 const makeCoordinates = feature => {
   const g = feature.geometry;
   if (g.type === 'Point') {
-    console.log('1: ' + JSON.stringify(g.coordinates))
     return [makePoint(g.coordinates)];
   } else if (g.type === 'MultiPoint') {
     return g.coordinates.map(makePoint);

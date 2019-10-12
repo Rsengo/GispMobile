@@ -1,10 +1,13 @@
 import WKT from 'terraformer-wkt-parser';
+import { BASE_CRS, WKT_CRS } from '../../../../constants';
+import { geometryService } from '../../../../services'; 
 
 const ActionTypes = {
     CHANGE_MAP_TYPE: 'map/CHANGE_MAP_TYPE',
     SEARCH_SUCCESS: 'map/SEARCH_SUCCESS',
     SEARCH_ERROR: 'map/SEARCH_ERROR',
-    HIGHLIGHT_GEOMETRY: 'map/HIGHLIGHT_GEOMETRY'
+    HIGHLIGHT_GEOMETRY: 'map/HIGHLIGHT_GEOMETRY',
+    CHANGE_REGION: 'map/CHANGE_REGION'
 };
 
 const changeMapType = (type) => (dispatch) => {
@@ -23,8 +26,6 @@ const searchOnMap = (coordinate) => async (dispatch, _, extra) => {
 };
 
 const highlightGeometry = (wkt) => (dispatch) => { 
-    console.log('wkt: ', wkt);
-
     if (!wkt) {
         dispatch({ type: ActionTypes.HIGHLIGHT_GEOMETRY, payload: null });
         return;
@@ -32,6 +33,14 @@ const highlightGeometry = (wkt) => (dispatch) => {
 
     const geom = WKT.parse(wkt);
     const { type, coordinates } = geom;
+
+    const bbox = geometryService.projectBbox(WKT_CRS, BASE_CRS, geom.bbox());
+    const region = geometryService.mapBboxToRegion(bbox);
+
+    console.log('region: ' + JSON.stringify(region));
+
+    dispatch({ type: ActionTypes.CHANGE_REGION, payload: region });
+
     const geoJson = {
         type: 'FeatureCollection',
         features: [
@@ -40,7 +49,7 @@ const highlightGeometry = (wkt) => (dispatch) => {
                 properties: {},
                 geometry: {
                     type,
-                    coordinates: [60.94510864566641, 76.49607371538877]
+                    coordinates: geometryService.projectCoordinates(WKT_CRS, BASE_CRS, coordinates)
                 }
             }
         ]
@@ -49,9 +58,14 @@ const highlightGeometry = (wkt) => (dispatch) => {
     dispatch({ type: ActionTypes.HIGHLIGHT_GEOMETRY, payload: geoJson })
 }; 
 
+const changeRegion = (region) => (dispatch) => {
+    dispatch({ type: ActionTypes.CHANGE_REGION, payload: region });
+}
+
 export {
     ActionTypes,
     changeMapType,
     searchOnMap,
-    highlightGeometry
+    highlightGeometry,
+    changeRegion
 };
