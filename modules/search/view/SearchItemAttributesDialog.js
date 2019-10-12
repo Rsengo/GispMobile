@@ -21,8 +21,8 @@ const SearchItemAttributesDialog = ({isVisible, onClose, attributes}) => {
                             const attrInfo = `${attrKey}: ${attrVal}`;
                         
                             return (
-                                <View style={styles.attributeContainer}>
-                                    <Paragraph key={attrKey}>{attrInfo}</Paragraph>
+                                <View key={attrKey} style={styles.attributeContainer}>
+                                    <Paragraph>{attrInfo}</Paragraph>
                                     <Divider />
                                 </View>
                             );
