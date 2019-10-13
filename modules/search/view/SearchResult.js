@@ -10,9 +10,9 @@ import { actions as mapActions } from '../../map';
 
 const DEFAULT_ITEM_NAME = 'Без названия';
 
-const SearchResult = ({ searchResultsIsOpen, searchData, highlightGeometry }) => {
+const SearchResult = ({ searchResultsIsOpened, searchData, highlightGeometry }) => {
     return(
-        searchResultsIsOpen 
+        searchResultsIsOpened 
             ? ( 
                 <SearchResultView 
                     data={searchData} 
@@ -121,11 +121,11 @@ const SearchResultItem = ({ item, openDialog }) => {
 };
 
 const mapStateToProps = ({ controls, map }) => {
-    const { searchResultsIsOpen } = controls;
+    const { searchResultsIsOpened } = controls;
     const { searchData } = map;
 
     return {
-        searchResultsIsOpen,
+        searchResultsIsOpened,
         searchData
     }
 };

@@ -10,21 +10,23 @@ const Controls = ({
   openLayersTreeDialog,
   openMapTypeDialog,
   openSearchResults,
-  searchResultsIsOpen,
+  openCoordinateTransitionDialog,
+  coordinateTransitionDialogIsOpened,
+  searchResultsIsOpened,
   mapTypeDialogIsOpened,
   layersTreeDialogIsOpened
 }) => {
   return (
     <React.Fragment>
       <FAB
-        visible={!searchResultsIsOpen}
+        visible={!searchResultsIsOpened}
         style={styles.first}
         small
         icon="layers"
         onPress={() => openLayersTreeDialog(!layersTreeDialogIsOpened)}
       />
       <FAB
-        visible={!searchResultsIsOpen}
+        visible={!searchResultsIsOpened}
         style={styles.second}
         small
         icon="map"
@@ -34,13 +36,14 @@ const Controls = ({
         style={styles.third}
         small
         icon="search"
-        onPress={() => openSearchResults(!searchResultsIsOpen)}
+        onPress={() => openSearchResults(!searchResultsIsOpened)}
       />
       <FAB
-        visible={!searchResultsIsOpen}
+        visible={!searchResultsIsOpened}
         style={styles.fourth}
         small
         icon="settings"
+        onPress={() => openCoordinateTransitionDialog(!coordinateTransitionDialogIsOpened)}
       />
     </React.Fragment>
   );

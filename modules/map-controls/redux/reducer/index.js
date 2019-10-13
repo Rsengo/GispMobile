@@ -12,7 +12,10 @@ const reducer = (state=initialState, action) => {
             return { ...state, mapTypeDialogIsOpened: payload };
 
         case ActionTypes.OPEN_SEARCH_RESULTS:
-            return { ...state, searchResultsIsOpen: payload };
+            return { ...state, searchResultsIsOpened: payload };
+
+        case ActionTypes.OPEN_COORDINATE_TRANSITION_DIALOG:
+            return { ...state, coordinateTransitionDialogIsOpened: payload }
 
         default:
             return { ...state };

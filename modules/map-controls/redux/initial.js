@@ -1,7 +1,8 @@
 const initialState = {
     layersTreeDialogIsOpened: false,
     mapTypeDialogIsOpened: false,
-    searchResultsIsOpen: false
+    searchResultsIsOpened: false,
+    coordinateTransitionDialogIsOpened: false
 };
 
 export default initialState;

@@ -4,7 +4,9 @@ const initialState = {
     errorMessage: null,
     layersTree: [],
     layers: [],
-    listSublayers: []
+    listSublayers: [],
+    defaultExtent: null,
+    spatialReferences: []
 };
 
 export default initialState;

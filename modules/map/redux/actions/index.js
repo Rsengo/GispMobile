@@ -1,4 +1,3 @@
-import WKT from 'terraformer-wkt-parser';
 import { BASE_CRS, WKT_CRS } from '../../../../constants';
 import { geometryService } from '../../../../services'; 
 
@@ -31,13 +30,11 @@ const highlightGeometry = (wkt) => (dispatch) => {
         return;
     }
 
-    const geom = WKT.parse(wkt);
+    const geom = geometryService.parseWKT(wkt);
     const { type, coordinates } = geom;
 
     const bbox = geometryService.projectBbox(WKT_CRS, BASE_CRS, geom.bbox());
-    const region = geometryService.mapBboxToRegion(bbox);
-
-    console.log('region: ' + JSON.stringify(region));
+    const region = geometryService.mapBboxToRegion(bbox, true);
 
     dispatch({ type: ActionTypes.CHANGE_REGION, payload: region });
 
@@ -59,7 +56,21 @@ const highlightGeometry = (wkt) => (dispatch) => {
 }; 
 
 const changeRegion = (region) => (dispatch) => {
-    dispatch({ type: ActionTypes.CHANGE_REGION, payload: region });
+    if (!region) {
+        return;
+    }
+
+    if (typeof(region) === 'object') {
+        dispatch({ type: ActionTypes.CHANGE_REGION, payload: region });
+        return;        
+    }
+
+    const geom = geometryService.parseWKT(region);
+    const bbox  = geom.bbox();
+    const projectBbox = geometryService.projectBbox(WKT_CRS, BASE_CRS, bbox);
+    const projectRegion = geometryService.mapBboxToRegion(projectBbox, false);
+
+    dispatch({ type: ActionTypes.CHANGE_REGION, payload: projectRegion });
 }
 
 export {

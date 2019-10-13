@@ -1,0 +1,1 @@
+export { default as CoordinateTransition } from './view/CoordinateTransition';

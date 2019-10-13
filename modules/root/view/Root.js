@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as rootActions } from '../redux';
+import { actions as mapActions } from '../../map'
 import { ActivityIndicator } from 'react-native-paper';
 import { View, Text } from 'react-native';
 import styles from './Root.styles';
@@ -11,6 +12,7 @@ import { Layers } from '../../layers'
 import { SearchResult } from '../../search';
 import { Portal } from 'react-native-paper';
 import { MapTypes } from '../../map-types';
+import { CoordinateTransition } from '../../coordinate-transition';
 
 const Spinner = () => (
     <View style={styles.spinner}>
@@ -42,6 +44,12 @@ const Main = () => (
 
         <Portal.Host>
             <Portal>
+                <CoordinateTransition />
+            </Portal>
+        </Portal.Host>
+
+        <Portal.Host>
+            <Portal>
                 <MapTypes />
             </Portal>
         </Portal.Host>
@@ -62,10 +70,7 @@ const Main = () => (
 
 class Root extends React.Component {
     componentWillMount() {
-        const { loadMapManifest } = this.props;
-        loadMapManifest();
-        // TODO: Проверить, мб работает
-        // this.reload();
+        this.reload();
     }
 
     reload = () => {
@@ -77,7 +82,10 @@ class Root extends React.Component {
         const { 
             mapManifestLoadingProcessing, 
             error, 
-            errorMessage } = this.props;
+            errorMessage,
+            defaultExtent,
+            changeRegion
+         } = this.props;
         
         if (mapManifestLoadingProcessing) {
             return <Spinner />;
@@ -87,26 +95,24 @@ class Root extends React.Component {
             return <Reload message={errorMessage} onPress={this.reload} />;
         }
 
+        if (defaultExtent) {
+            changeRegion(defaultExtent);
+        }
+
         return <Main />
     }
 }
 
-const mapStateToProps = (state) => {
-    const { 
-        mapManifestLoadingProcessing, 
-        error, 
-        errorMessage } = state.root;
-    
+const mapStateToProps = ({ root }) => {  
     return {
-        mapManifestLoadingProcessing,
-        error,
-        errorMessage
+        ...root
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     const actions = {
         ...rootActions,
+        ...mapActions
     };
     return bindActionCreators(actions, dispatch);
 }
