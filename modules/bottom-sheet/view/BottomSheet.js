@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import styles from './BottomSheet.styles';
-import Modal, {
-  ModalContent,
-  SlideAnimation,
-} from 'react-native-modals';
+import { default as ReanimatedBottomSheet } from 'reanimated-bottom-sheet';
+
+const DefaultSnapPoints = ['70%', '30%', 0];
 
 const Header = () => (
     <View style={styles.header}>
@@ -14,31 +13,37 @@ const Header = () => (
     </View>
 );
 
-const animation = new SlideAnimation({
-  slideFrom: 'bottom',
-});
+class BottomSheet extends React.Component {
+  bsRef = React.createRef();
 
-const BottomSheet = ({ children, scrollable, isOpen, onClose }) => {
-  const Container = scrollable ? ScrollView : View;
-  return (
-    <Modal.BottomModal
-      visible={isOpen}
-      onTouchOutside={onClose}
-      onSwipeOut={onClose}
-      height={0.7}
-      width={1}
-      modalTitle={<Header />}
-      modalAnimation={animation}
-    >
-      <ModalContent
-        style={styles.bodyContainer}
-      >
-        <Container>
-          {children}
-        </Container>
-      </ModalContent>
-    </Modal.BottomModal>
-  )
-};
+  componentDidUpdate() {
+    const { isOpen, snapPoints } = this.props;
+    const points = snapPoints || DefaultSnapPoints;
+
+    if (isOpen) {
+      this.bsRef.current.snapTo(0);
+    } else {
+      this.bsRef.current.snapTo(points.length - 1);
+    }
+  }
+
+  render() {
+    const { children, scrollable, onClose, snapPoints } = this.props;
+    const Container = scrollable ? ScrollView : View;
+    return (
+      <ReanimatedBottomSheet
+        renderHeader={Header}
+        renderContent = {() => (<Container style={styles.bodyContainer}>{children}</Container>)}
+        snapPoints = {snapPoints || DefaultSnapPoints}
+        ref={this.bsRef}
+        onCloseEnd={onClose}
+        enabledContentGestureInteraction={false}
+        enabledInnerScrolling={true}
+        enabledContentTapInteraction={false}
+        initialSnap={0}
+      />
+    )
+  }
+}
 
 export default BottomSheet;

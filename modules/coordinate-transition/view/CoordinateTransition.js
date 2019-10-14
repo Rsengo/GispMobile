@@ -1,70 +1,138 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actions as controlsActions, Controls } from '../../map-controls';
+import { actions as controlsActions } from '../../map-controls';
 import { View } from 'react-native';
-import { Provider, Menu, Dialog, Button, Portal } from 'react-native-paper';
+import { Dialog, Button, Portal, Chip, TextInput } from 'react-native-paper';
+import { BottomSheet } from '../../bottom-sheet';
+import styles from './CoordinateTransition.styles';
 
 const CoordinateTransition = ({ 
     spatialReferences, 
     coordinateTransitionDialogIsOpened,
     openCoordinateTransitionDialog
 }) => {
+    console.log('sprc: ' + spatialReferences.length);
     console.log('isa: ' + coordinateTransitionDialogIsOpened);
     return (
-        <Dialog
-            visible={coordinateTransitionDialogIsOpened}
-            onDismiss={() => openCoordinateTransitionDialog(false)}
+        <BottomSheet 
+            isOpen={coordinateTransitionDialogIsOpened}
+            onClose={() => openCoordinateTransitionDialog(false)}
         >
-            <Dialog.Title>Переход по координатам</Dialog.Title>
-            <Dialog.Content>
-                <CoordinateTransitionContent 
-                    spatialReferences={spatialReferences} 
-                />
-            </Dialog.Content>
-        </Dialog>
+            <CoordinateTransitionContent 
+                spatialReferences={spatialReferences} 
+            />
+        </BottomSheet>
     );
 }
 
 const CoordinateTransitionContent = ({ spatialReferences }) => {
+    if (!spatialReferences || !spatialReferences.length){
+        return null;
+    }
+
     const [state, setState] = React.useState({
-        selectorVisible: true,
+        selectorVisible: false,
         selectedCRS: spatialReferences[0]
     });
     const { selectorVisible, selectedCRS } = state;
     const { type } = selectedCRS;
     const metric = type === 'metric';
+    const openBtnName = selectedCRS ? selectedCRS.name : 'Система координат';
 
     return (
-        <View>
-            <CoordinateTransitionCrsSelector 
+        <View style={styles.mainContainer}>
+            <View style={styles.contentContainer}>
+                <Button 
+                    style={{width: '100%'}}
+                    mode='text'
+                    onPress={() => setState({ ...state, selectorVisible: true })}
+                >
+                    {openBtnName}
+                </Button>
+                { 
+                    metric 
+                        ? <CoordinateTransitionMetric style={styles.inputsContainer} /> 
+                        : <CoordinateTransitionDegree style={styles.inputsContainer} /> 
+                }
+                <CoordinateTransitionControls 
+                    style={styles.controls} 
+                    showOnMap={() => {/* TODO */}} 
+                /> 
+            </View>
+            <CrsSelectionDialog 
                 visible={selectorVisible}
                 onDismiss={() => setState({ ...state, selectorVisible: false })} 
-                onOpen={() => setState({ ...state, selectorVisible: true })}
                 onSelect={(crs) => setState({ ...state, selectedCRS: crs, selectorVisible: false })}
                 items={spatialReferences}
                 selectedItem={selectedCRS}
             />
-            { 
-                metric 
-                    ? <CoordinateTransitionMetric /> 
-                    : <CoordinateTransitionDegree /> 
-            }
-            <CoordinateTransitionControls showOnMap={() => {/* TODO */}} /> 
         </View>
     );
 }
 
-const CoordinateTransitionMetric = () => {
-    return null;
+const CoordinateTransitionMetric = ({style}) => {
+    const [state, setState] = React.useState({
+        longitude: 0,
+        latitude: 0
+    });
+    const { longitude, latitude } = state;
+    return(
+        <View style={{...style}}>
+            <TextInput
+                style={styles.input}
+                label='Долгота'
+                value={longitude}
+                keyboardType='decimal-pad'
+                onChangeText={longitude => setState({ ...state, longitude })}
+            />
+            <TextInput
+                style={styles.input}
+                label='Широта'
+                value={latitude}
+                keyboardType='decimal-pad'
+                onChangeText={latitude => setState({ ...state, latitude })}
+            />
+        </View>
+    );
 }
 
-const CoordinateTransitionDegree = () => {
-    return null;
+const CoordinateTransitionDegree = ({style}) => {
+    const [state, setState] = React.useState({
+        grad: 0,
+        min: 0,
+        sec: 0
+    });
+    const { grad, min, sec } = state;
+    return(
+        <View style={{...style}}>
+            <TextInput
+                style={styles.input}
+                label='Градусы'
+                value={grad}
+                keyboardType='decimal-pad'
+                onChangeText={grad => setState({ ...state, grad })}
+            />
+            <TextInput
+                style={styles.input}
+                label='Минуты'
+                value={min}
+                keyboardType='decimal-pad'
+                onChangeText={min => setState({ ...state, min })}
+            />
+            <TextInput
+                style={styles.input}
+                label='Секунды'
+                value={sec}
+                keyboardType='decimal-pad'
+                onChangeText={sec => setState({ ...state, sec })}
+            />
+        </View>
+    );
 }
 
-const CoordinateTransitionControls = ({ showOnMap }) => (
-    <View>
+const CoordinateTransitionControls = ({ showOnMap, style }) => (
+    <View style={{...style}}>
         <Button 
             mode="outlined" 
             onPress={showOnMap}
@@ -74,44 +142,37 @@ const CoordinateTransitionControls = ({ showOnMap }) => (
     </View>
 );
 
-const CoordinateTransitionCrsSelector = ({
+const CrsSelectionDialog = ({
     visible, 
     onDismiss, 
-    onOpen, 
     onSelect,
     items,
     selectedItem
 }) => {
-    const openBtnName = selectedItem ? selectedItem.name : 'Система координат';
-
     return (
         <Portal>
-            <View
-                style={{
-                    paddingTop: 50,
-                    flexDirection: 'row',
-                    justifyContent: 'center'
-                }}>
-                <Menu
-                    visible={visible}
-                    onDismiss={onDismiss}
-                    anchor={
-                        <Button onPress={onOpen}>{openBtnName}</Button>
-                    }
-                >
-                    {
-                        items.map(item => {
-                            const { name } = item;
-                            return (
-                                <Menu.Item  
-                                    onPress={() => onSelect(item)} 
-                                    title={name}
-                                />
-                            );
-                        })
-                    }
-                </Menu>
-            </View>
+            <Dialog
+                visible={visible}
+                onDismiss={onDismiss}
+            >
+                <Dialog.Title>Выбор системы координат</Dialog.Title>
+                <Dialog.Content>
+                {
+                    items.map(item => {
+                        const { name, id } = item;
+                        return (
+                            <Chip 
+                                key={id}
+                                selected={selectedItem.id === id}
+                                onPress={() => onSelect(item)}
+                            >
+                                {name}
+                            </Chip>
+                        );
+                    })
+                }
+                </Dialog.Content>
+            </Dialog>
         </Portal>
       );
 }
@@ -119,6 +180,8 @@ const CoordinateTransitionCrsSelector = ({
 const mapStateToProps = ({ root, controls }) => {
     const { spatialReferences } = root;
     const { coordinateTransitionDialogIsOpened } = controls;
+
+    console.log('test2: ' + spatialReferences.length )
 
     return {
         spatialReferences,

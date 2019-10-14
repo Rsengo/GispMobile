@@ -42,11 +42,7 @@ const Main = () => (
 
         <Layers />
 
-        <Portal.Host>
-            <Portal>
-                <CoordinateTransition />
-            </Portal>
-        </Portal.Host>
+        <CoordinateTransition />
 
         <Portal.Host>
             <Portal>

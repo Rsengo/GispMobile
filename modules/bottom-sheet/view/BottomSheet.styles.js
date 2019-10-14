@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
     header: {
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     bodyContainer: {
-      flex: 1,
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      height: '100%'
     }
 });
 

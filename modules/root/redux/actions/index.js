@@ -23,6 +23,7 @@ const loadMapManifest = () => async (dispatch, _, extra) => {
             listSublayers, 
             layersTree 
         };
+        console.log('test1: ' + data.spatialReferences.length)
         dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_SUCCESS, payload });
     } else {
         dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_ERROR, payload: errorMessage });
