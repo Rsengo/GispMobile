@@ -4,9 +4,11 @@ import { bindActionCreators } from 'redux';
 import { actions as controlsActions } from '../../map-controls';
 import { actions as mapActions } from '../../map';
 import { View } from 'react-native';
-import { Dialog, Button, Portal, Chip, TextInput } from 'react-native-paper';
+import { Dialog, Button, Portal, Chip } from 'react-native-paper';
 import { BottomSheet } from '../../bottom-sheet';
 import styles from './CoordinateTransition.styles';
+import CoordinateInputsMetric from './inputs/CoordinateInputs.Metric';
+import CoordinateInputsDegree from './inputs/CoordinateInputs.Degree';
 
 const CoordinateTransition = ({ 
     spatialReferences, 
@@ -46,8 +48,8 @@ const CoordinateTransitionContent = ({ spatialReferences, coordinateTransition }
                 />
                 { 
                     metric 
-                        ? <CoordinateTransitionMetric /> 
-                        : <CoordinateTransitionDegree /> 
+                        ? <CoordinateInputsMetric /> 
+                        : <CoordinateInputsDegree /> 
                 }
                 <CoordinateTransitionControls  
                     showOnMap={() => coordinateTransition({}, selectedCRS)} 
@@ -74,66 +76,6 @@ const CoordinateTransitionSelector = ({ openSelector, label }) => (
         </Button>
     </View>
 )
-
-const CoordinateTransitionMetric = () => {
-    const [state, setState] = React.useState({
-        longitude: 0,
-        latitude: 0
-    });
-    const { longitude, latitude } = state;
-    return(
-        <View style={styles.inputsContainer}>
-            <TextInput
-                style={styles.input}
-                label='Долгота'
-                value={longitude}
-                keyboardType='decimal-pad'
-                onChangeText={longitude => setState({ ...state, longitude })}
-            />
-            <TextInput
-                style={styles.input}
-                label='Широта'
-                value={latitude}
-                keyboardType='decimal-pad'
-                onChangeText={latitude => setState({ ...state, latitude })}
-            />
-        </View>
-    );
-}
-
-const CoordinateTransitionDegree = () => {
-    const [state, setState] = React.useState({
-        grad: 0,
-        min: 0,
-        sec: 0
-    });
-    const { grad, min, sec } = state;
-    return(
-        <View style={styles.inputsContainer}>
-            <TextInput
-                style={styles.input}
-                label='Градусы'
-                value={grad}
-                keyboardType='decimal-pad'
-                onChangeText={grad => setState({ ...state, grad })}
-            />
-            <TextInput
-                style={styles.input}
-                label='Минуты'
-                value={min}
-                keyboardType='decimal-pad'
-                onChangeText={min => setState({ ...state, min })}
-            />
-            <TextInput
-                style={styles.input}
-                label='Секунды'
-                value={sec}
-                keyboardType='decimal-pad'
-                onChangeText={sec => setState({ ...state, sec })}
-            />
-        </View>
-    );
-}
 
 const CoordinateTransitionControls = ({ showOnMap }) => (
     <View style={styles.controls}>
