@@ -1,22 +1,8 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
-import styles from './BottomSheet.styles';
 import { default as ReanimatedBottomSheet } from 'reanimated-bottom-sheet';
-import Modal, {
-  ModalContent,
-  SlideAnimation,
-} from 'react-native-modals';
-import {Provider} from 'react-native-paper'
-
-const DefaultSnapPoints = ['70%', '30%', 0];
-
-const Header = () => (
-    <View style={styles.header}>
-      <View style={styles.panelHeader}>
-        <View style={styles.panelHandle} />
-      </View>
-    </View>
-);
+import Header from './BottomSheet.Header';
+import Content from './BottomSheet.Content';
+import { DefaultSnapPoints } from '../data/BottomSheet.constants';
 
 class BottomSheet extends React.Component {
   bsRef = React.createRef();
@@ -34,11 +20,12 @@ class BottomSheet extends React.Component {
 
   render() {
     const { children, scrollable, onClose, snapPoints } = this.props;
-    const Container = scrollable ? ScrollView : View;
     return (
       <ReanimatedBottomSheet
         renderHeader={Header}
-        renderContent = {() => (<Container style={styles.bodyContainer}>{children}</Container>)}
+        renderContent = {() => 
+          <Content scrollable={scrollable}>{children}</Content>
+        }
         snapPoints = {snapPoints || DefaultSnapPoints}
         ref={this.bsRef}
         onCloseEnd={onClose}
@@ -50,7 +37,5 @@ class BottomSheet extends React.Component {
     )
   }
 }
-
-
 
 export default BottomSheet;

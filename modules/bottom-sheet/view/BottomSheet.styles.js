@@ -1,6 +1,6 @@
-import { StyleSheet, StatusBar, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const headerStyles = StyleSheet.create({
     header: {
       backgroundColor: '#f7f5eee8',
       shadowColor: '#000000',
@@ -17,11 +17,14 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       backgroundColor: '#00000040',
       marginBottom: 10,
-    },
+    }
+});
+
+const contentStyles = StyleSheet.create({
     bodyContainer: {
       backgroundColor: '#fff',
       height: '100%'
     }
 });
 
-export default styles;
+export { headerStyles, contentStyles };

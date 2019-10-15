@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import styles from './Map.styles';
-import MapView, { WMSTile, Marker } from 'react-native-maps';
+import MapView from 'react-native-maps';
 import { layerService } from '../../../services';
-import { getWmsLayerUrl } from '../services/wmsService';
 import { actions as mapActions } from '../redux';
 import { actions as controlsActions } from '../../map-controls';
-import Geojson from './Geojson';
+import Layer from './Map.Layer';
+import HighlightObject from './Map.HighlightObject';
+import styles from './Map.styles';
 
 class Map extends React.Component {
   search = (e) => {
@@ -28,27 +28,8 @@ class Map extends React.Component {
         onRegionChangeComplete={changeRegion}
         onPress={({nativeEvent}) => this.search(nativeEvent)}
       >
-        {
-          activeLayers.map(({ layerId, sublayers, layerOrder }) => {
-            return (
-              <WMSTile 
-                key={layerId}
-                urlTemplate={getWmsLayerUrl(layerId, sublayers)} 
-                tileSize={256}
-                zIndex={layerOrder}
-                opacity={1}
-              />
-            )
-          })
-        }
-        {geoJson 
-          ? <Geojson 
-            geojson={geoJson} 
-            color={'#000000'} 
-            strokeWidth={3} 
-            fillColor={'#0000ff04'} 
-            strokeColor={'#000000'} /> 
-          : null}
+        { activeLayers.map(activeLayer => <Layer {...activeLayer} />) }
+        { geoJson ? <HighlightObject geoJson={geoJson} /> : null }
       </MapView>
     );
   }

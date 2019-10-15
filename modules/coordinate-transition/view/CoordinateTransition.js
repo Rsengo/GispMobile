@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as controlsActions } from '../../map-controls';
+import { actions as mapActions } from '../../map';
 import { View } from 'react-native';
 import { Dialog, Button, Portal, Chip, TextInput } from 'react-native-paper';
 import { BottomSheet } from '../../bottom-sheet';
@@ -23,7 +24,7 @@ const CoordinateTransition = ({
     </BottomSheet>
 );
 
-const CoordinateTransitionContent = ({ spatialReferences }) => {
+const CoordinateTransitionContent = ({ spatialReferences, coordinateTransition }) => {
     if (!spatialReferences || !spatialReferences.length){
         return null;
     }
@@ -53,7 +54,7 @@ const CoordinateTransitionContent = ({ spatialReferences }) => {
                         : <CoordinateTransitionDegree /> 
                 }
                 <CoordinateTransitionControls  
-                    showOnMap={() => {/* TODO */}} 
+                    showOnMap={() => coordinateTransition({}, selectedCRS)} 
                 /> 
             </View>
             <CrsSelectionDialog 
@@ -67,7 +68,7 @@ const CoordinateTransitionContent = ({ spatialReferences }) => {
     );
 }
 
-const CoordinateTransitionMetric = ({style}) => {
+const CoordinateTransitionMetric = () => {
     const [state, setState] = React.useState({
         longitude: 0,
         latitude: 0
@@ -187,7 +188,8 @@ const mapStateToProps = ({ root, controls }) => {
 
 const mapDispatchToProps = (dispatch) => {
     const actions = {
-        ...controlsActions
+        ...controlsActions,
+        ...mapActions
     };
 
     return bindActionCreators(actions, dispatch);

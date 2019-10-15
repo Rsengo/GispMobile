@@ -73,10 +73,15 @@ const changeRegion = (region) => (dispatch) => {
     dispatch({ type: ActionTypes.CHANGE_REGION, payload: projectRegion });
 }
 
+const coordinateTransition = (coordinate, spatialReference) => (dispatch) => {
+
+}
+
 export {
     ActionTypes,
     changeMapType,
     searchOnMap,
     highlightGeometry,
-    changeRegion
+    changeRegion,
+    coordinateTransition
 };
