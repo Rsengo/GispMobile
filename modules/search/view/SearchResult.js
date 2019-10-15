@@ -1,28 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Image, Dimensions } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import styles from './SearchResult.styles';
-import { Headline, Paragraph, Caption, Button, Dialog } from 'react-native-paper';
-import SearchItemAttributesDialog from './SearchItemAttributesDialog';
+import AttributesDialog from './dialog/AttributesDialog';
+import SearchResultCarousel from './carousel/SearchResultCarousel'
 import { bindActionCreators } from 'redux';
 import { actions as mapActions } from '../../map';
 
-const DEFAULT_ITEM_NAME = 'Без названия';
-
-const SearchResult = ({ searchResultsIsOpened, searchData, highlightGeometry }) => {
-    return(
-        searchResultsIsOpened 
-            ? ( 
-                <SearchResultView 
-                    data={searchData} 
-                    highlightGeometry={highlightGeometry} />
-            ) 
-            : null
-    );
-};
-
-class SearchResultView extends React.Component {
+class SearchResult extends React.Component {
     constructor(props) {
         super(props);
 
@@ -68,57 +51,25 @@ class SearchResultView extends React.Component {
 
     render() {
         const { dialogOpened, attrs } = this.state;
-        const { data, highlightGeometry } = this.props;
+        const { searchResultsIsOpened, searchData, highlightGeometry } = this.props;
         return (
-            <React.Fragment>
-                <View style={styles.container}>
-                    <Carousel
-                        data={data}
-                        renderItem={({item}) => <SearchResultItem item={item} openDialog={this.openDialog} />}
-                        sliderWidth={Dimensions.get('window').width}
-                        itemWidth={300}
-                        lockScrollWhileSnapping={true}
-                        onSnapToItem={(slideIndex) => {
-                            console.log(slideIndex);
-                            highlightGeometry(data[slideIndex].geometry);
-                        }}
+            searchResultsIsOpened 
+            ? ( 
+                <React.Fragment>
+                    <SearchResultCarousel 
+                        data={searchData} 
+                        highlightGeometry={highlightGeometry} />
+                    <AttributesDialog 
+                        isVisible={dialogOpened} 
+                        onClose={this.closeDialog}
+                        attributes={attrs} 
                     />
-                </View>
-                <SearchItemAttributesDialog 
-                    isVisible={dialogOpened} 
-                    onClose={this.closeDialog}
-                    attributes={attrs} 
-                />
-            </React.Fragment>
+                </React.Fragment>
+            ) 
+            : null
         );
     }
 }
-
-const SearchResultItem = ({ item, openDialog }) => {
-    const { 
-        attributes, 
-        displayFieldName, 
-        layerName, 
-        sublayerName 
-    } = item;
-    return (
-            <View style={styles.itemContainer}>
-                <View style={styles.itemContent}>
-                    <Headline>{attributes[displayFieldName] || DEFAULT_ITEM_NAME}</Headline>
-                    <Caption>{layerName}</Caption>
-                    <Caption>{sublayerName}</Caption>
-                </View>
-                <View style={styles.itemActions}>
-                    <Button 
-                        mode="outlined" 
-                        onPress={() => openDialog(attributes)}
-                    >
-                        Показать свойства
-                    </Button>
-                </View>
-            </View>
-    )
-};
 
 const mapStateToProps = ({ controls, map }) => {
     const { searchResultsIsOpened } = controls;

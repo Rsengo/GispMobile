@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { List, Checkbox, Portal } from 'react-native-paper';
-import Legend from './Legend';
+import { List, Checkbox } from 'react-native-paper';
+import Legend from 'Legend';
 import { LayerTreeItemTypes } from '../../../constants';
-import styles from './Layer.styles';
+import { layerStyles as styles } from './Layers.styles';
 
 const mapChildToComponent = (child, activateLayer) => {
   const { key, Id, ...childProps } = child;

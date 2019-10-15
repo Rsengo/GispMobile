@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const itemStyles = StyleSheet.create({
     attributeContainer: {
         marginBottom: 5
     }
 });
 
-export default styles;
+export { itemStyles };

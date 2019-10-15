@@ -1,6 +1,6 @@
 import React from 'react'
 import { BottomSheet } from '../../bottom-sheet'
-import LayersList from './LayersList'
+import LayersList from './Layers.List'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as rootActions } from '../../root';

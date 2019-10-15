@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { List } from 'react-native-paper';
 import { Image } from 'react-native';
-import styles from './Legend.styles';
+import { legendStyles as styles } from './Layers.styles';
 
 const Legend = ({
     base64img,

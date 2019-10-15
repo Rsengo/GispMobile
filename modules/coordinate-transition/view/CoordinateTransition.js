@@ -6,7 +6,6 @@ import { actions as mapActions } from '../../map';
 import { View } from 'react-native';
 import { Dialog, Button, Portal, Chip, TextInput } from 'react-native-paper';
 import { BottomSheet } from '../../bottom-sheet';
-import { metric, degree } from '../data/CoordinateTransition.fields';
 import styles from './CoordinateTransition.styles';
 
 const CoordinateTransition = ({ 
@@ -41,13 +40,10 @@ const CoordinateTransitionContent = ({ spatialReferences, coordinateTransition }
     return (
         <View style={styles.mainContainer}>
             <View style={styles.contentContainer}>
-                <Button 
-                    style={styles.selector}
-                    mode='text'
-                    onPress={() => setState({ ...state, selectorVisible: true })}
-                >
-                    {openBtnName}
-                </Button>
+                <CoordinateTransitionSelector 
+                    openSelector={() => setState({ ...state, selectorVisible: true })}
+                    label={openBtnName}
+                />
                 { 
                     metric 
                         ? <CoordinateTransitionMetric /> 
@@ -67,6 +63,17 @@ const CoordinateTransitionContent = ({ spatialReferences, coordinateTransition }
         </View>
     );
 }
+
+const CoordinateTransitionSelector = ({ openSelector, label }) => (
+    <View style={styles.selector}>
+        <Button 
+            mode='text'
+            onPress={openSelector}
+        >
+            {label}
+        </Button>
+    </View>
+)
 
 const CoordinateTransitionMetric = () => {
     const [state, setState] = React.useState({
@@ -177,8 +184,6 @@ const CrsSelectionDialog = ({
 const mapStateToProps = ({ root, controls }) => {
     const { spatialReferences } = root;
     const { coordinateTransitionDialogIsOpened } = controls;
-
-    console.log('test2: ' + spatialReferences.length )
 
     return {
         spatialReferences,

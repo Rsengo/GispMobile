@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const layerStyles = StyleSheet.create({
     container: {
         display: 'flex', 
         flexDirection:'row', 
@@ -16,4 +16,11 @@ const styles = StyleSheet.create({
     }
 });
 
-export default styles;
+const legendStyles = StyleSheet.create({
+    img: {
+        width: 20,
+        height: 20
+    }    
+});
+
+export { layerStyles, legendStyles };
