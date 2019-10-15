@@ -5,26 +5,23 @@ import { actions as controlsActions } from '../../map-controls';
 import { View } from 'react-native';
 import { Dialog, Button, Portal, Chip, TextInput } from 'react-native-paper';
 import { BottomSheet } from '../../bottom-sheet';
+import { metric, degree } from '../data/CoordinateTransition.fields';
 import styles from './CoordinateTransition.styles';
 
 const CoordinateTransition = ({ 
     spatialReferences, 
     coordinateTransitionDialogIsOpened,
     openCoordinateTransitionDialog
-}) => {
-    console.log('sprc: ' + spatialReferences.length);
-    console.log('isa: ' + coordinateTransitionDialogIsOpened);
-    return (
-        <BottomSheet 
-            isOpen={coordinateTransitionDialogIsOpened}
-            onClose={() => openCoordinateTransitionDialog(false)}
-        >
-            <CoordinateTransitionContent 
-                spatialReferences={spatialReferences} 
-            />
-        </BottomSheet>
-    );
-}
+}) => (
+    <BottomSheet 
+        isOpen={coordinateTransitionDialogIsOpened}
+        onClose={() => openCoordinateTransitionDialog(false)}
+    >
+        <CoordinateTransitionContent 
+            spatialReferences={spatialReferences} 
+        />
+    </BottomSheet>
+);
 
 const CoordinateTransitionContent = ({ spatialReferences }) => {
     if (!spatialReferences || !spatialReferences.length){
@@ -44,7 +41,7 @@ const CoordinateTransitionContent = ({ spatialReferences }) => {
         <View style={styles.mainContainer}>
             <View style={styles.contentContainer}>
                 <Button 
-                    style={{width: '100%'}}
+                    style={styles.selector}
                     mode='text'
                     onPress={() => setState({ ...state, selectorVisible: true })}
                 >
@@ -52,11 +49,10 @@ const CoordinateTransitionContent = ({ spatialReferences }) => {
                 </Button>
                 { 
                     metric 
-                        ? <CoordinateTransitionMetric style={styles.inputsContainer} /> 
-                        : <CoordinateTransitionDegree style={styles.inputsContainer} /> 
+                        ? <CoordinateTransitionMetric /> 
+                        : <CoordinateTransitionDegree /> 
                 }
-                <CoordinateTransitionControls 
-                    style={styles.controls} 
+                <CoordinateTransitionControls  
                     showOnMap={() => {/* TODO */}} 
                 /> 
             </View>
@@ -78,7 +74,7 @@ const CoordinateTransitionMetric = ({style}) => {
     });
     const { longitude, latitude } = state;
     return(
-        <View style={{...style}}>
+        <View style={styles.inputsContainer}>
             <TextInput
                 style={styles.input}
                 label='Долгота'
@@ -97,7 +93,7 @@ const CoordinateTransitionMetric = ({style}) => {
     );
 }
 
-const CoordinateTransitionDegree = ({style}) => {
+const CoordinateTransitionDegree = () => {
     const [state, setState] = React.useState({
         grad: 0,
         min: 0,
@@ -105,7 +101,7 @@ const CoordinateTransitionDegree = ({style}) => {
     });
     const { grad, min, sec } = state;
     return(
-        <View style={{...style}}>
+        <View style={styles.inputsContainer}>
             <TextInput
                 style={styles.input}
                 label='Градусы'
@@ -131,8 +127,8 @@ const CoordinateTransitionDegree = ({style}) => {
     );
 }
 
-const CoordinateTransitionControls = ({ showOnMap, style }) => (
-    <View style={{...style}}>
+const CoordinateTransitionControls = ({ showOnMap }) => (
+    <View style={styles.controls}>
         <Button 
             mode="outlined" 
             onPress={showOnMap}

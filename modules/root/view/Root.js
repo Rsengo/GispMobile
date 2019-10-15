@@ -40,9 +40,17 @@ const Main = () => (
     <View style={styles.main}>
         <Map />
 
-        <Layers />
-
-        <CoordinateTransition />
+        <Portal.Host>
+            <Portal>
+                <Layers />
+            </Portal>
+        </Portal.Host>
+        
+        <Portal.Host>
+            <Portal>
+                <CoordinateTransition />
+            </Portal>
+        </Portal.Host>
 
         <Portal.Host>
             <Portal>

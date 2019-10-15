@@ -2,6 +2,11 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import styles from './BottomSheet.styles';
 import { default as ReanimatedBottomSheet } from 'reanimated-bottom-sheet';
+import Modal, {
+  ModalContent,
+  SlideAnimation,
+} from 'react-native-modals';
+import {Provider} from 'react-native-paper'
 
 const DefaultSnapPoints = ['70%', '30%', 0];
 
@@ -45,5 +50,7 @@ class BottomSheet extends React.Component {
     )
   }
 }
+
+
 
 export default BottomSheet;
