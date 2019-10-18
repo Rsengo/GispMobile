@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { List, Checkbox } from 'react-native-paper';
-import Legend from 'Legend';
+import Legend from './Layers.Legend';
 import { LayerTreeItemTypes } from '../../../constants';
 import { layerStyles as styles } from './Layers.styles';
 

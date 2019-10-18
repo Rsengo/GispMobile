@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar as PaperAvatar } from 'react-native-paper';
-import styles from './MapTypes.styles';
+import { avatarStyles as styles} from './MapTypes.styles';
 
 const Avatar = ({ img }) => (
     <PaperAvatar.Image 

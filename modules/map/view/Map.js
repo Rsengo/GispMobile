@@ -28,7 +28,7 @@ class Map extends React.Component {
         onRegionChangeComplete={changeRegion}
         onPress={({nativeEvent}) => this.search(nativeEvent)}
       >
-        { activeLayers.map(activeLayer => <Layer {...activeLayer} />) }
+        { activeLayers.map(activeLayer => <Layer {...activeLayer} key={activeLayer.layerId} />) }
         { geoJson ? <HighlightObject geoJson={geoJson} /> : null }
       </MapView>
     );

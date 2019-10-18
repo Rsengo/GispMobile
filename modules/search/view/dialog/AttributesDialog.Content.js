@@ -11,6 +11,7 @@ const Content = ({ attributes }) => {
             {
                 attrKeys.map(attrKey => (
                     <Item 
+                        key={attrKey}
                         attrKey={attrKey} 
                         attrVal={attributes[attrKey] || DEFAULT_ATTR_VALUE} 
                     />

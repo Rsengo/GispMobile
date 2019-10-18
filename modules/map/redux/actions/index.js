@@ -33,6 +33,8 @@ const highlightGeometry = (wkt) => (dispatch) => {
     const geom = geometryService.parseWKT(wkt);
     const { type, coordinates } = geom;
 
+    console.log('ccc: ' + JSON.stringify(coordinates))
+
     const bbox = geometryService.projectBbox(WKT_CRS, BASE_CRS, geom.bbox());
     const region = geometryService.mapBboxToRegion(bbox, true);
 
@@ -74,7 +76,35 @@ const changeRegion = (region) => (dispatch) => {
 }
 
 const coordinateTransition = (coordinate, spatialReference) => (dispatch) => {
+    console.log('coord: ' + JSON.stringify(coordinate))
+    const { definition } = spatialReference;
+    const { longitude, latitude } = coordinate;
 
+    const projectCoordinate = geometryService.projectCoordinates(
+        definition, 
+        BASE_CRS, 
+        [longitude, latitude ]);
+
+    const geoJson = {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'Point',
+                    coordinates: projectCoordinate
+                }
+            }
+        ]
+    };
+
+    dispatch({ type: ActionTypes.HIGHLIGHT_GEOMETRY, payload: geoJson })
+
+    const bbox = [...projectCoordinate, ...projectCoordinate];
+    const region = geometryService.mapBboxToRegion(bbox, true);
+
+    dispatch({ type: ActionTypes.CHANGE_REGION, payload: region });
 }
 
 export {

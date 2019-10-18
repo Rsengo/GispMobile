@@ -24,7 +24,7 @@ class MapTypes extends React.Component {
             >
                 <Dialog.Title>Тип карты</Dialog.Title>
                 <Dialog.Content>
-                    <Content mapType={mapType} entries={entries} />
+                    <Content mapType={mapType} entries={entries} selectItem={this.selectItem} />
                 </Dialog.Content>
             </Dialog>
         );

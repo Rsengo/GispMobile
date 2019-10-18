@@ -10,10 +10,16 @@ const LayerTreeItemTypes = {
     LEGEND: 'legend'
 }
 
+const CrsTypes = {
+    Degree: 'degree',
+    Metric: 'metric'
+}
+
 export {
     API_URL,
     PROXY_URL,
     BASE_CRS,
     WKT_CRS,
-    LayerTreeItemTypes
+    LayerTreeItemTypes,
+    CrsTypes
 }

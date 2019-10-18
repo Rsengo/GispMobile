@@ -58,7 +58,9 @@ class SearchResult extends React.Component {
                 <React.Fragment>
                     <SearchResultCarousel 
                         data={searchData} 
-                        highlightGeometry={highlightGeometry} />
+                        highlightGeometry={highlightGeometry}
+                        openDialog={this.openDialog}
+                    />
                     <AttributesDialog 
                         isVisible={dialogOpened} 
                         onClose={this.closeDialog}
