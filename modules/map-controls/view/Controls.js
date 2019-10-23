@@ -1,57 +1,50 @@
 import React from 'react';
 import { FAB } from 'react-native-paper';
-import { styles, getFabStyles } from './Controls.styles';
+import styles from './Controls.styles';
 import { withTheme } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions as controlsActions } from '../redux';
+import buttons from '../data/Controls.buttons'
 
-const Controls = ({ 
-  openLayersTreeDialog,
-  openMapTypeDialog,
-  openSearchResults,
-  openCoordinateTransitionDialog,
-  coordinateTransitionDialogIsOpened,
-  searchResultsIsOpened,
-  mapTypeDialogIsOpened,
-  layersTreeDialogIsOpened
-}) => {
+const Controls = ({activeModules, ...props}) => {
   return (
     <React.Fragment>
-      <FAB
-        visible={!searchResultsIsOpened}
-        style={styles.first}
-        small
-        icon="layers"
-        onPress={() => openLayersTreeDialog(!layersTreeDialogIsOpened)}
-      />
-      <FAB
-        visible={!searchResultsIsOpened}
-        style={styles.second}
-        small
-        icon="map"
-        onPress={() => openMapTypeDialog(!mapTypeDialogIsOpened)}
-      />
-      <FAB
-        style={styles.third}
-        small
-        icon="search"
-        onPress={() => openSearchResults(!searchResultsIsOpened)}
-      />
-      <FAB
-        visible={!searchResultsIsOpened}
-        style={styles.fourth}
-        small
-        icon="settings"
-        onPress={() => openCoordinateTransitionDialog(!coordinateTransitionDialogIsOpened)}
-      />
+      {
+        buttons.map(button => {
+          const { style, small, icon, openMethod, linkedProp, showIfModuleActive } = button;
+          const isActive = activeModules[linkedProp];
+          const onPress = props[openMethod];
+          const visible = hideIfModuleActive ? isActive : isActive;
+
+          var keys = Object.keys(activeModules);
+          var filteredKeys = showIfModuleActive 
+            ? keys.filter(x => x !== linkedProp) 
+            : keys;
+          const visible = filteredKeys
+            .map(x => activeModules[x])
+            .every(x => x === false); 
+
+          return (
+            <FAB 
+              visible={visible}
+              style={styles[style]}
+              small={small}
+              icon={icon}
+              onPress={() => onPress(!isActive)}
+            />
+          )
+        })
+      }
     </React.Fragment>
   );
 };
 
 const mapStateToProps = ({ controls }) => {
   return {
-    ...controls
+    activeModules: {
+      ...controls
+    }
   }
 }
 

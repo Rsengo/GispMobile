@@ -1,0 +1,1 @@
+export { default as AttributesDialog } from './view/AttributesDialog';

@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import styles from './CoordinateTransition.styles';
 import Selector from './CoordinateTransition.Selector';
 import Controls from './CoordinateTransition.Controls';
-import CrsSelectionDialog from './selection-dialog/CrsSelectionDialog';
-import CoordinateInputs from './inputs/CoordinateInputs';
+import CrsSelectionDialog from '../selection-dialog/view/CrsSelectionDialog';
+import CoordinateInputs from '../inputs';
 
 const getInitialState = (spatialReferences) => ({
     selectorVisible: false,

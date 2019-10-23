@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { actions as rootActions } from '../redux';
 import { actions as mapActions } from '../../map'
 import Spinner from './Root.Spinner';
 import Reload from './Root.Reload';
@@ -21,10 +20,8 @@ class Root extends React.Component {
         const { 
             mapManifestLoadingProcessing, 
             error, 
-            errorMessage,
-            defaultExtent,
-            changeRegion
-         } = this.props;
+            errorMessage
+        } = this.props;
         
         if (mapManifestLoadingProcessing) {
             return <Spinner />;
@@ -34,23 +31,18 @@ class Root extends React.Component {
             return <Reload message={errorMessage} onPress={this.reload} />;
         }
 
-        if (defaultExtent) {
-            changeRegion(defaultExtent);
-        }
-
         return <Main />
     }
 }
 
-const mapStateToProps = ({ root }) => {  
+const mapStateToProps = ({ map }) => {  
     return {
-        ...root
+        ...map
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     const actions = {
-        ...rootActions,
         ...mapActions
     };
     return bindActionCreators(actions, dispatch);

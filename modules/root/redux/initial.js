@@ -1,12 +1,7 @@
 const initialState = {
     mapManifestLoadingProcessing: false,
     error: false,
-    errorMessage: null,
-    layersTree: [],
-    layers: [],
-    listSublayers: [],
-    defaultExtent: null,
-    spatialReferences: []
+    errorMessage: null
 };
 
 export default initialState;

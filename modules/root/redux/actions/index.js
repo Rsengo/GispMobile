@@ -1,11 +1,14 @@
-import { layerService, layerTreeService } from '../../../../services';
+import { layerService } from '../../../../services';
+
+import { actions as coordinateTransitionActions } from '../../../coordinate-transition';
+import { actions as layersActions } from '../../../layers';
+import { actions as mapActions } from '../../../map';
 
 const ActionTypes = {
-    MAP_MANIFEST_LOAD_SUCCESS: 'app/MAP_MANIFEST_LOAD_SUCCESS',
-    MAP_MANIFEST_LOAD_ERROR: 'app/MAP_MANIFEST_LOAD_ERROR',
-    MAP_MANIFEST_LOAD_PROCESSING: 'app/MAP_MANIFEST_LOAD_PROCESSING',
-    LAYER_ACTIVATE: 'app/LAYER_ACTIVATE'
-}
+    MAP_MANIFEST_LOAD_SUCCESS: 'root/MAP_MANIFEST_LOAD_SUCCESS',
+    MAP_MANIFEST_LOAD_ERROR: 'root/MAP_MANIFEST_LOAD_ERROR',
+    MAP_MANIFEST_LOAD_PROCESSING: 'root/MAP_MANIFEST_LOAD_PROCESSING',
+};
 
 const loadMapManifest = () => async (dispatch, _, extra) => {
     dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_PROCESSING, payload: true });
@@ -16,52 +19,32 @@ const loadMapManifest = () => async (dispatch, _, extra) => {
     dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_PROCESSING, payload: false });
 
     if (success) {
-        const { layers, layersTree } = data;
+        const { 
+            layers, 
+            layersTree,
+            defaultExtent,
+            spatialReferences
+        } = data;
+
         const listSublayers = layerService.getListSublayers(layers, true);
-        const payload = { 
-            ...data, 
+
+        dispatch(layersActions.init({ 
+            layers, 
             listSublayers, 
             layersTree 
-        };
-        console.log('test1: ' + data.spatialReferences.length)
-        dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_SUCCESS, payload });
+        }));
+        dispatch(coordinateTransitionActions.init({
+            spatialReferences
+        }));
+        dispatch(mapActions.changeRegion(defaultExtent));
+        
+        dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_SUCCESS });
     } else {
         dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_ERROR, payload: errorMessage });
     }
 };
 
-const activateLayer = (layerId, isActive) => (dispatch, getState) => {
-    const state = getState();
-    const { listSublayers, layersTree } = state.root;
-    
-    const updateLayersTree = layerTreeService.activateNode(
-        [ ...layersTree ], 
-        layerId,
-        isActive
-    ).sort();
-    
-    const listSublayerIds = layerTreeService.getListSublayerIds(layersTree, layerId);
-
-    const listSublayersForUpdate = listSublayers.filter(x => listSublayerIds.includes(x.Id));
-    const immutableListSublayers = listSublayers.filter(x => !listSublayerIds.includes(x.Id));
-
-    const updatedListSublayers = listSublayersForUpdate.map(x => ({
-        ...x,
-        isActive
-    }));
-
-    const payload = { 
-        listSublayers: [ 
-            ...updatedListSublayers, 
-            ...immutableListSublayers 
-        ],
-        layersTree: updateLayersTree
-    };
-    dispatch({ type: ActionTypes.LAYER_ACTIVATE, payload });
+export {
+    ActionTypes,
+    loadMapManifest
 }
-
-export { 
-    ActionTypes, 
-    loadMapManifest,
-    activateLayer
-};

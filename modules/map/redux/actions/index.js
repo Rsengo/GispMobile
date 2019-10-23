@@ -2,26 +2,13 @@ import { BASE_CRS, WKT_CRS } from '../../../../constants';
 import { geometryService } from '../../../../services'; 
 
 const ActionTypes = {
-    CHANGE_MAP_TYPE: 'map/CHANGE_MAP_TYPE',
-    SEARCH_SUCCESS: 'map/SEARCH_SUCCESS',
-    SEARCH_ERROR: 'map/SEARCH_ERROR',
     HIGHLIGHT_GEOMETRY: 'map/HIGHLIGHT_GEOMETRY',
+    CHANGE_MAP_TYPE: 'map-types/CHANGE_MAP_TYPE',
     CHANGE_REGION: 'map/CHANGE_REGION'
 };
 
 const changeMapType = (type) => (dispatch) => {
     dispatch({ type: ActionTypes.CHANGE_MAP_TYPE, payload: type });
-};
-
-const searchOnMap = (coordinate) => async (dispatch, _, extra) => {
-    const { api } = extra;
-    const { success, data: payload, errorMessage } = await api.map.search(coordinate);
-
-    if (success) {
-        dispatch({ type: ActionTypes.SEARCH_SUCCESS, payload });
-    } else {
-        dispatch({ type: ActionTypes.SEARCH_ERROR, payload: errorMessage });
-    }
 };
 
 const highlightGeometry = (wkt) => (dispatch) => { 
@@ -33,26 +20,15 @@ const highlightGeometry = (wkt) => (dispatch) => {
     const geom = geometryService.parseWKT(wkt);
     const { type, coordinates } = geom;
 
-    console.log('ccc: ' + JSON.stringify(coordinates))
-
     const bbox = geometryService.projectBbox(WKT_CRS, BASE_CRS, geom.bbox());
     const region = geometryService.mapBboxToRegion(bbox, true);
 
     dispatch({ type: ActionTypes.CHANGE_REGION, payload: region });
 
-    const geoJson = {
-        type: 'FeatureCollection',
-        features: [
-            {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                    type,
-                    coordinates: geometryService.projectCoordinates(WKT_CRS, BASE_CRS, coordinates)
-                }
-            }
-        ]
-    };
+    const geoJson = geometryService.createGeoJson({
+        type,
+        coordinates: geometryService.projectCoordinates(WKT_CRS, BASE_CRS, coordinates)
+    });
 
     dispatch({ type: ActionTypes.HIGHLIGHT_GEOMETRY, payload: geoJson })
 }; 
@@ -76,7 +52,6 @@ const changeRegion = (region) => (dispatch) => {
 }
 
 const coordinateTransition = (coordinate, spatialReference) => (dispatch) => {
-    console.log('coord: ' + JSON.stringify(coordinate))
     const { definition } = spatialReference;
     const { longitude, latitude } = coordinate;
 
@@ -85,19 +60,10 @@ const coordinateTransition = (coordinate, spatialReference) => (dispatch) => {
         BASE_CRS, 
         [longitude, latitude ]);
 
-    const geoJson = {
-        type: 'FeatureCollection',
-        features: [
-            {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                    type: 'Point',
-                    coordinates: projectCoordinate
-                }
-            }
-        ]
-    };
+    const geoJson = geometryService.createGeoJson({
+        type: 'Point',
+        coordinates: projectCoordinate
+    });
 
     dispatch({ type: ActionTypes.HIGHLIGHT_GEOMETRY, payload: geoJson })
 
@@ -110,7 +76,6 @@ const coordinateTransition = (coordinate, spatialReference) => (dispatch) => {
 export {
     ActionTypes,
     changeMapType,
-    searchOnMap,
     highlightGeometry,
     changeRegion,
     coordinateTransition

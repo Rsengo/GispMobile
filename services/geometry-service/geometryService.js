@@ -18,7 +18,7 @@ const _transformDeltas = (deltas) => {
         longitudeDelta: longitudeDeltaTransformed,
         latitudeDelta: latitudeDeltaTransformed
     }
-}
+};
 
 const projectCoordinates = (fromCrs, toCrs, coordinates) => {
     var firstChild = coordinates[0];
@@ -28,7 +28,7 @@ const projectCoordinates = (fromCrs, toCrs, coordinates) => {
     }
 
     return coordinates.map(x => projectCoordinates(fromCrs, toCrs, x));
-}
+};
 
 const projectBbox = (fromCrs, toCrs, bbox) => {
     const [minPointX, minPointY, maxPointX, maxPointY] = bbox;
@@ -38,7 +38,7 @@ const projectBbox = (fromCrs, toCrs, bbox) => {
     const maxPointProj = projectCoordinates(fromCrs, toCrs, maxPoint);
 
     return [...minPointProj, ...maxPointProj];
-}
+};
 
 const mapBboxToRegion = (bbox, useTransformations) => {
     const [
@@ -65,13 +65,27 @@ const mapBboxToRegion = (bbox, useTransformations) => {
         latitude,
         ...transformedDeltas
     };
-}
+};
 
 const parseWKT = (wkt) => WKT.parse(wkt);
+
+const createGeoJson = (geometry) => {
+    return {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                properties: {},
+                geometry
+            }
+        ]
+    };
+};
 
 export {
     projectCoordinates,
     projectBbox,
     mapBboxToRegion,
-    parseWKT
+    parseWKT,
+    createGeoJson
 }

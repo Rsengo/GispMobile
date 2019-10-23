@@ -1,0 +1,1 @@
+export { default as SearchResultCarousel } from './view/SearchResultCarousel';

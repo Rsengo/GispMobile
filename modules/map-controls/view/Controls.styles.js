@@ -1,40 +1,42 @@
 import { StyleSheet } from 'react-native';
 
+const MARGIN = 5;
+const VERTICAL_MARGIN = 50;
+
+const _getBottomPosition = (index) => 
+    MARGIN * (index + 1) + VERTICAL_MARGIN * index;
+
+const _getTopPosition = (index) => 
+    VERTICAL_MARGIN * (index + 1) + MARGIN * index;
+
 const styles = StyleSheet.create({
-    first: {
+    layers: {
         backgroundColor: '#fff',
         position: 'absolute',
-        right: 5,
-        bottom: 5 * 1 + 50 * 0
+        right: MARGIN,
+        bottom: _getBottomPosition(0)
     },
 
-    second: {
+    map: {
         backgroundColor: '#fff',
         position: 'absolute',
-        right: 5,
-        bottom: 5 * 2 + 50 * 1
+        right: MARGIN,
+        bottom: _getBottomPosition(1)
     },
 
-    third: {
+    search: {
         backgroundColor: '#fff',
         position: 'absolute',
-        right: 5,
-        top: 50
+        right: MARGIN,
+        top: _getTopPosition(0)
     },
 
-    fourth: {
+    coordinateTransition: {
         backgroundColor: '#fff',
         position: 'absolute',
-        right: 5,
-        bottom: 5 * 3 + 50 * 2
+        right: MARGIN,
+        bottom: getBottomPosition(2)
     }
 });
 
-const getFabStyles = (num) => ({
-    backgroundColor: '#fff',
-    position: 'absolute',
-    right: 5,
-    bottom: 5 * (num + 1)
-});
-
-export { styles, getFabStyles };
+export default styles;

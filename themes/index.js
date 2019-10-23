@@ -1,3 +1,1 @@
-import theme from './default-theme/default-theme';
-
-export { theme }
+export { default as defaultTheme } from './default-theme/default-theme';

@@ -1,5 +1,3 @@
-import Root from './view/Root';
+export { default as Root } from './view/Root';
 
 export { reducer, actions } from './redux';
-
-export { Root };

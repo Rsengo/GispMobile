@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AttributesDialog from './dialog/AttributesDialog';
-import SearchResultCarousel from './carousel/SearchResultCarousel'
+import { AttributesDialog } from '../dialog';
+import { SearchResultCarousel } from '../carousel'
 import { bindActionCreators } from 'redux';
-import { actions as mapActions } from '../../map';
+import { actions as searchActions } from '../redux';
 
 class SearchResult extends React.Component {
     constructor(props) {
@@ -73,9 +73,9 @@ class SearchResult extends React.Component {
     }
 }
 
-const mapStateToProps = ({ controls, map }) => {
+const mapStateToProps = ({ controls, search }) => {
     const { searchResultsIsOpened } = controls;
-    const { searchData } = map;
+    const { searchData } = search;
 
     return {
         searchResultsIsOpened,
@@ -85,7 +85,7 @@ const mapStateToProps = ({ controls, map }) => {
 
 const mapDispatchToProps = (dispatch) => {
     const actions = {
-        ...mapActions
+        ...searchActions
     };
 
     return bindActionCreators(actions, dispatch);

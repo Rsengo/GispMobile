@@ -5,6 +5,7 @@ import MapView from 'react-native-maps';
 import { layerService } from '../../../services';
 import { actions as mapActions } from '../redux';
 import { actions as controlsActions } from '../../map-controls';
+import { actions as searchActions } from '../../search';
 import Layer from './Map.Layer';
 import HighlightObject from './Map.HighlightObject';
 import styles from './Map.styles';
@@ -35,8 +36,8 @@ class Map extends React.Component {
   }
 }
 
-const mapStateToProps = ({ root, map }) => {
-   const { listSublayers } = root;
+const mapStateToProps = ({ layers, map }) => {
+   const { listSublayers } = layers;
   const activeSublayers = layerService.getActive(listSublayers);
   // TODO:
   const activeLayers = layerService.groupByTopLayer(activeSublayers).filter(x => x.layerId !== 47);
@@ -50,7 +51,8 @@ const mapStateToProps = ({ root, map }) => {
 const mapDispatchToProps = (dispatch) => {
   const actions = {
     ...mapActions,
-    ...controlsActions
+    ...controlsActions,
+    ...searchActions
   }
 
   return bindActionCreators(actions, dispatch);

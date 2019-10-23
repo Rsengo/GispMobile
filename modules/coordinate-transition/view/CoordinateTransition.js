@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actions as controlsActions } from '../../map-controls';
 import { actions as mapActions } from '../../map';
-import { BottomSheet } from '../../bottom-sheet';
+import { BottomSheet } from '../../../components';
 import Content from './CoordinateTransition.Content';
 
 const CoordinateTransition = ({ 
@@ -24,8 +24,8 @@ const CoordinateTransition = ({
     </BottomSheet>
 );
 
-const mapStateToProps = ({ root, controls }) => {
-    const { spatialReferences } = root;
+const mapStateToProps = ({ coordinateTransition, controls }) => {
+    const { spatialReferences } = coordinateTransition;
     const { coordinateTransitionDialogIsOpened } = controls;
 
     return {
