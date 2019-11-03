@@ -1,24 +1,25 @@
 import React from 'react';
 import { Dialog, Portal } from 'react-native-paper';
 import CrsSelectionDialogContent from './CrsSelectionDialog.Content';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const CrsSelectionDialog = ({
     visible, 
     onDismiss, 
     onSelect,
     items,
-    selectedItem,
-    t
+    selectedItem
 }) => {
+    const [translate] = useTranslation();
     const { id: selectedItemId } = selectedItem;
+
     return (
         <Portal>
             <Dialog
                 visible={visible}
                 onDismiss={onDismiss}
             >
-                <Dialog.Title>{t('coordinateJump:selectionDialog:title')}</Dialog.Title>
+                <Dialog.Title>{translate('coordinateJump:selectionDialog:title')}</Dialog.Title>
                 <Dialog.Content>
                     <CrsSelectionDialogContent 
                         items={items} 
@@ -31,4 +32,4 @@ const CrsSelectionDialog = ({
       );
 };
 
-export default withTranslation()(CrsSelectionDialog);
+export default CrsSelectionDialog;

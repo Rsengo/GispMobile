@@ -1,15 +1,17 @@
 import React from 'react';
 import { Dialog } from 'react-native-paper';
 import Content from './AttributesDialog.Content';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-const AttributesDialog = ({ isVisible, onClose, attributes, t }) => {
+const AttributesDialog = ({ isVisible, onClose, attributes }) => {
+    const [translate] = useTranslation();
+
     return (
         <Dialog
             visible={isVisible}
             onDismiss={onClose}
         >
-            <Dialog.Title>{t('search.dialog.title')}</Dialog.Title>
+            <Dialog.Title>{translate('search.dialog.title')}</Dialog.Title>
             <Dialog.Content>
                 <Content attributes={attributes} />
             </Dialog.Content>
@@ -17,4 +19,4 @@ const AttributesDialog = ({ isVisible, onClose, attributes, t }) => {
     )
 };
 
-export default withTranslation()(AttributesDialog);
+export default AttributesDialog;

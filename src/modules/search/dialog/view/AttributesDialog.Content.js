@@ -1,12 +1,14 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import Item from './AttributesDialog.Item';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const DEFAULT_ATTR_VALUE = 'search.dialog.defaultAttrValue';
 
-const Content = ({ attributes, t }) => {
+const Content = ({ attributes }) => {
+    const [translate] = useTranslation();
     const attrKeys = Object.keys(attributes);
+
     return (
         <ScrollView>
             {
@@ -14,7 +16,7 @@ const Content = ({ attributes, t }) => {
                     <Item 
                         key={attrKey}
                         attrKey={attrKey} 
-                        attrVal={attributes[attrKey] || t(DEFAULT_ATTR_VALUE)} 
+                        attrVal={attributes[attrKey] || translate(DEFAULT_ATTR_VALUE)} 
                     />
                 ))
             }
@@ -22,4 +24,4 @@ const Content = ({ attributes, t }) => {
     );
 };
 
-export default withTranslation()(Content);
+export default Content;

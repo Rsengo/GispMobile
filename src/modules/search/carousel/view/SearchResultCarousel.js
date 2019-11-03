@@ -17,7 +17,7 @@ const SearchResultCarousel = ({ data, highlightGeometry, openDialog }) => {
         <View style={styles.container}>
             <Carousel
                 data={data}
-                renderItem={({item}) => <Item item={item} openDialog={openDialog} />}
+                renderItem={({item}) => <Item openDialog={openDialog} {...item} />}
                 sliderWidth={Dimensions.get('window').width}
                 itemWidth={300}
                 lockScrollWhileSnapping={true}

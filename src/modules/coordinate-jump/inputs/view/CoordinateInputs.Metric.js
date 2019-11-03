@@ -3,16 +3,18 @@ import { TextInput } from 'react-native-paper';
 import { metricInputStyles as styles} from './CoordinateInputs.styles';
 import { View } from 'react-native'
 import { metric } from './CoordinateInputs.fields';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-const CoordinateInputsMetric = ({ coordinate, onChange, t }) => {
+const CoordinateInputsMetric = ({ coordinate, onChange }) => {
+    const [translate] = useTranslation();
+
     return(
         <View style={styles.container}>
             {
                 metric.map(({ label, valueProp }) => (
                     <TextInput
                         style={styles.input}
-                        label={t(label)}
+                        label={translate(label)}
                         value={coordinate[valueProp].toString()}
                         keyboardType='decimal-pad'
                         onChangeText={val => onChange({ ...coordinate, [valueProp]: (+val) })}
@@ -23,4 +25,4 @@ const CoordinateInputsMetric = ({ coordinate, onChange, t }) => {
     );
 }
 
-export default withTranslation()(CoordinateInputsMetric);
+export default CoordinateInputsMetric;
