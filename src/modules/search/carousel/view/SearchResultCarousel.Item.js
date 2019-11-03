@@ -2,17 +2,19 @@ import React from 'react';
 import { View } from 'react-native';
 import { itemStyles as styles } from './SearchResultCarousel.styles';
 import { Headline, Caption, Button } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const DEFAULT_ITEM_NAME = 'search.carousel.defaultItemName';
 
-const Item = ({ item, openDialog, t }) => {
-    const { 
-        attributes, 
-        displayFieldName, 
-        layerName, 
-        sublayerName 
-    } = item;
+const Item = ({ 
+    attributes, 
+    displayFieldName, 
+    layerName, 
+    sublayerName, 
+    openDialog 
+}) => {
+    const [translate] = useTranslation();
+    
     return (
         <View style={styles.itemContainer}>
             <View style={styles.itemContent}>
@@ -25,11 +27,11 @@ const Item = ({ item, openDialog, t }) => {
                     mode="outlined" 
                     onPress={() => openDialog(attributes)}
                 >
-                    {t('search.carousel.showPropsButton')}
+                    {translate('search.carousel.showPropsButton')}
                 </Button>
             </View>
         </View>
     )
 };
 
-export default withTranslation()(Item);
+export default Item;

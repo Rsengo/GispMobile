@@ -10,33 +10,34 @@ import MapLayer from './Map.Layer';
 import MapHighlightObject from './Map.HighlightObject';
 import styles from './Map.styles';
 
-class Map extends React.Component {
-  search = (e) => {
-    const { coordinate } = e;
-    const { searchOnMap, openSearchResults } = this.props;
-    
+const Map = ({ 
+  activeLayers, 
+  mapType, 
+  geoJson, 
+  changeRegion, 
+  region, 
+  searchOnMap, 
+  openSearchResults 
+}) => {
+  const search = () =>
     batch(() => {
       searchOnMap(coordinate);
       openSearchResults(true);
     });
-  }
-
-  render() {
-    const { activeLayers, mapType, geoJson, changeRegion, region } = this.props;
-    return (
-      <AnimatedMap 
-        style={styles.map}
-        mapType={mapType}
-        provider={null}
-        region={region}
-        onRegionChangeComplete={changeRegion}
-        onPress={({nativeEvent}) => this.search(nativeEvent)}
-      >
-        { activeLayers.map(activeLayer => <MapLayer {...activeLayer} key={activeLayer.layerId} />) }
-        <MapHighlightObject geoJson={geoJson} />
-      </AnimatedMap>
-    );
-  }
+  
+  return (
+    <AnimatedMap 
+      style={styles.map}
+      mapType={mapType}
+      provider={null}
+      region={region}
+      onRegionChangeComplete={changeRegion}
+      onPress={({nativeEvent}) => search(nativeEvent)}
+    >
+      { activeLayers.map(activeLayer => <MapLayer {...activeLayer} key={activeLayer.layerId} />) }
+      <MapHighlightObject geoJson={geoJson} />
+    </AnimatedMap>
+  );
 }
 
 const mapStateToProps = ({ layers, map }) => {

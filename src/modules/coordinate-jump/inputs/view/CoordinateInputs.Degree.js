@@ -4,7 +4,7 @@ import { degreeInputStyles as styles} from './CoordinateInputs.styles';
 import { View } from 'react-native'
 import { Subheading } from 'react-native-paper';
 import { degree } from './CoordinateInputs.fields'
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const calcLatitude = (coordinate) => {
     const { grad_lat: grad, min_lat: min, sec_lat: sec } = coordinate;
@@ -16,7 +16,7 @@ const calcLongitude = (coordinate) => {
     return grad + min / 60 + sec / 3600;
 }
 
-const CoordinateInputsDegree = ({ coordinate, onChange, t }) => {
+const CoordinateInputsDegree = ({ coordinate, onChange }) => {
     const [state, setState] = React.useState({
         grad_long: 0,
         min_long: 0,
@@ -25,16 +25,19 @@ const CoordinateInputsDegree = ({ coordinate, onChange, t }) => {
         min_lat: 0,
         sec_lat: 0
     });
+    const [translate] = useTranslation();
+
     const { latitudeFields, longitudeFields } = degree;
+
     return(
         <React.Fragment>
-            <Subheading>{t('coordinateJump.inputs.longitude')}</Subheading>
+            <Subheading>{translate('coordinateJump.inputs.longitude')}</Subheading>
             <View style={styles.container}>
                 {
                     longitudeFields.map(({ label, valueProp }) => (
                         <TextInput
                             style={styles.input}
-                            label={t(label)}
+                            label={translate(label)}
                             value={state[valueProp].toString()}
                             keyboardType='decimal-pad'
                             onChangeText={val => {
@@ -46,13 +49,13 @@ const CoordinateInputsDegree = ({ coordinate, onChange, t }) => {
                     ))
                 }
             </View>
-            <Subheading>{t('coordinateJump.inputs.latitude')}</Subheading>
+            <Subheading>{translate('coordinateJump.inputs.latitude')}</Subheading>
             <View style={styles.container}>
                 {
                     latitudeFields.map(({ label, valueProp }) => (
                         <TextInput
                             style={styles.input}
-                            label={t(label)}
+                            label={translate(label)}
                             value={state[valueProp].toString()}
                             keyboardType='decimal-pad'
                             onChangeText={val => {
@@ -68,4 +71,4 @@ const CoordinateInputsDegree = ({ coordinate, onChange, t }) => {
     );
 }
 
-export default withTranslation()(CoordinateInputsDegree);
+export default CoordinateInputsDegree;
