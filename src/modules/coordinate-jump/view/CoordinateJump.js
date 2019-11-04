@@ -13,18 +13,24 @@ const CoordinateJump = ({
     coordinateJumpDialogIsOpened,
     openCoordinateJumpDialog,
     coordinateJump
-}) => (
-    <BottomSheet 
-        isOpen={coordinateJumpDialogIsOpened}
-        onClose={() => openCoordinateJumpDialog(false)}
-    >
-        <Content 
-            spatialReferences={spatialReferences} 
-            coordinateJump={coordinateJump} 
-            onClose={() => openCoordinateJumpDialog(false)}
-        />
-    </BottomSheet>
-);
+}) => {
+    const closeDialog = React.useCallback(() => {
+        openCoordinateJumpDialog(false)
+    }, []);
+
+    return (
+        <BottomSheet 
+            isOpen={coordinateJumpDialogIsOpened}
+            onClose={closeDialog}
+        >
+            <Content 
+                spatialReferences={spatialReferences} 
+                coordinateJump={coordinateJump} 
+                onClose={closeDialog}
+            />
+        </BottomSheet>
+    );
+};
 
 const mapStateToProps = ({ coordinateJump, controls }) => {
     const { spatialReferences } = coordinateJump;

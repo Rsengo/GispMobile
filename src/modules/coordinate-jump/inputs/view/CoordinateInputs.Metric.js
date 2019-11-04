@@ -13,6 +13,7 @@ const CoordinateInputsMetric = ({ coordinate, onChange }) => {
             {
                 metric.map(({ label, valueProp }) => (
                     <TextInput
+                        key={valueProp}
                         style={styles.input}
                         label={translate(label)}
                         value={coordinate[valueProp].toString()}

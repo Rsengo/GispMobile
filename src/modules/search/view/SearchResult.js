@@ -8,68 +8,55 @@ import { actions as mapActions } from '../../map';
 import { hideIfNoData } from '../../../hoc';
 import { compose } from 'recompose';
 
-class SearchResult extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { 
-            dialogOpened: false, 
-            attrs: {} 
-        };
-    }
-
-    closeDialog = () => this.setState({ 
-        ...this.state, 
-        dialogOpened: false 
+const SearchResult = ({ 
+    searchData, 
+    highlightGeometry 
+}) => {
+    const [state, setState] = React.useState({
+        dialogOpened: false, 
+        attrs: {}
     });
 
-    openDialog = (attrs) => this.setState({ 
-        ...this.state, 
+    const hightlightFirstItem = React.useCallback(() => {
+        if (!searchData || !searchData.length) {
+            return;
+        }
+
+        highlightGeometry(searchData[0].geometry);
+    }, [searchData]);
+
+    React.useEffect(() => {
+        hightlightFirstItem();
+        return () => highlightGeometry(null);
+    }, [searchData]);
+
+    const openDialog = (attrs) => setState({ 
+        ...state, 
         dialogOpened: true, 
         attrs 
     });
 
-    hightlightFirstItem = () => {
-        const { data, highlightGeometry } = this.props;
+    const closeDialog = () => setState({ 
+        ...state, 
+        dialogOpened: false 
+    });
 
-        if (!data || !data.length) {
-            return;
-        }
-
-        highlightGeometry(data[0].geometry);
-    }
-
-    componentDidUpdate() {
-        this.hightlightFirstItem();
-    }
-
-    componentDidMount() {
-        this.hightlightFirstItem();
-    }
-
-    componentWillUnmount() {
-        const { highlightGeometry } = this.props;
-        highlightGeometry(null);
-    }
-
-    render() {
-        const { dialogOpened, attrs } = this.state;
-        const { searchData, highlightGeometry } = this.props;
-        return (
-            <React.Fragment>
-                <SearchResultCarousel 
-                    data={searchData} 
-                    highlightGeometry={highlightGeometry}
-                    openDialog={this.openDialog}
-                />
-                <AttributesDialog 
-                    isVisible={dialogOpened} 
-                    onClose={this.closeDialog}
-                    attributes={attrs} 
-                />
-            </React.Fragment>
-        );
-    }
+    const { dialogOpened, attrs } = state;
+    
+    return (
+        <React.Fragment>
+            <SearchResultCarousel 
+                data={searchData} 
+                highlightGeometry={highlightGeometry}
+                openDialog={openDialog}
+            />
+            <AttributesDialog 
+                isVisible={dialogOpened} 
+                onClose={closeDialog}
+                attributes={attrs} 
+            />
+        </React.Fragment>
+    );
 }
 
 const mapStateToProps = ({ controls, search }) => {
@@ -91,7 +78,10 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actions, dispatch);
 }
 
-const hasNoData = ({ searchResultsIsOpened }) => !searchResultsIsOpened;
+const hasNoData = ({ searchResultsIsOpened, searchData }) => 
+    !searchResultsIsOpened || 
+    !searchData || 
+    !searchData.length;
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),

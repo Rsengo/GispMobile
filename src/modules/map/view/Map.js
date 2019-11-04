@@ -19,11 +19,14 @@ const Map = ({
   searchOnMap, 
   openSearchResults 
 }) => {
-  const search = () =>
+  const search = React.useCallback((e) => {
+    const { coordinate } = e;
     batch(() => {
       searchOnMap(coordinate);
       openSearchResults(true);
     });
+  }, []);
+  const changeRegionCallback = React.useCallback(changeRegion, []);
   
   return (
     <AnimatedMap 
@@ -31,7 +34,7 @@ const Map = ({
       mapType={mapType}
       provider={null}
       region={region}
-      onRegionChangeComplete={changeRegion}
+      onRegionChangeComplete={changeRegionCallback}
       onPress={({nativeEvent}) => search(nativeEvent)}
     >
       { activeLayers.map(activeLayer => <MapLayer {...activeLayer} key={activeLayer.layerId} />) }

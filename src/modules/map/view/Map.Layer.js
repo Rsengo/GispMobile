@@ -3,12 +3,15 @@ import { wmsService } from '../services';
 import { WMSTile } from 'react-native-maps';
 
 const MapLayer = ({ layerId, sublayers, layerOrder }) => {
-  const { getWmsLayerUrl } = wmsService;
-  
+  const url = React.useMemo(
+    () => wmsService.getWmsLayerUrl(layerId, sublayers), 
+    [layerId, sublayers]
+  );
+
   return (
     <WMSTile 
       key={layerId}
-      urlTemplate={getWmsLayerUrl(layerId, sublayers)} 
+      urlTemplate={url} 
       tileSize={256}
       zIndex={layerOrder}
       opacity={1}

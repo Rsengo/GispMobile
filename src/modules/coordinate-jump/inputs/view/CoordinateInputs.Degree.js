@@ -36,6 +36,7 @@ const CoordinateInputsDegree = ({ coordinate, onChange }) => {
                 {
                     longitudeFields.map(({ label, valueProp }) => (
                         <TextInput
+                            key={valueProp}
                             style={styles.input}
                             label={translate(label)}
                             value={state[valueProp].toString()}
@@ -54,6 +55,7 @@ const CoordinateInputsDegree = ({ coordinate, onChange }) => {
                 {
                     latitudeFields.map(({ label, valueProp }) => (
                         <TextInput
+                            key={valueProp}
                             style={styles.input}
                             label={translate(label)}
                             value={state[valueProp].toString()}

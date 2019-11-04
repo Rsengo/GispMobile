@@ -11,6 +11,6 @@ const MapHighlightObject = ({ geoJson }) => (
         strokeColor={'#000000'} /> 
 );
 
-const hasNoData = ({ geoJson }) => geoJson;
+const hasNoData = ({ geoJson }) => !geoJson;
 
 export default hideIfNoData(hasNoData)(MapHighlightObject);

@@ -3,6 +3,8 @@ import { List } from 'react-native-paper';
 import { Layer } from '../layer';
 
 const LayersList = ({ layersTree, activateLayer }) => {
+    const activateLayerCallback = React.useCallback(activateLayer, []);
+
     return (
         <List.Section>
             { 
@@ -14,7 +16,7 @@ const LayersList = ({ layersTree, activateLayer }) => {
                             layerKey={key} 
                             itemId={Id}
                             key={key}
-                            activateLayer={activateLayer} 
+                            activateLayer={activateLayerCallback} 
                         />
                     ) 
                 })

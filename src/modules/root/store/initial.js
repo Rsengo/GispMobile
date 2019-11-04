@@ -1,5 +1,5 @@
 const initialState = {
-    mapManifestLoadingProcessing: false,
+    mapManifestLoadingProcessing: true,
     error: false,
     errorMessage: null
 };

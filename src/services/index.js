@@ -1,4 +1,4 @@
-import * as layerService from './layers/layerServicee';
+import * as layerService from './layers/layerService';
 import * as layerTreeService from './layers/layerTreeService';
 import * as geometryService from './geometry/geometryService';
 

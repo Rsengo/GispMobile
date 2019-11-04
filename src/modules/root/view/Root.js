@@ -6,33 +6,24 @@ import RootSpinner from './Root.Spinner';
 import RootReload from './Root.Reload';
 import RootMain from './Root.Main';
 
-class Root extends React.Component {
-    componentWillMount() {
-        this.reload();
+const Root = ({
+    mapManifestLoadingProcessing, 
+    error, 
+    errorMessage,
+    loadMapManifest
+}) => {
+    const reload = React.useCallback(loadMapManifest, []);
+    React.useEffect(reload, []);
+
+    if (mapManifestLoadingProcessing) {
+        return <RootSpinner />;
     }
 
-    reload = () => {
-        const { loadMapManifest } = this.props;
-        loadMapManifest();
+    if (error) {
+        return <RootReload message={errorMessage} onPress={reload} />;
     }
 
-    render() {
-        const { 
-            mapManifestLoadingProcessing, 
-            error, 
-            errorMessage
-        } = this.props;
-        
-        if (mapManifestLoadingProcessing) {
-            return <RootSpinner />;
-        }
-
-        if (error) {
-            return <RootReload message={errorMessage} onPress={this.reload} />;
-        }
-
-        return <RootMain />
-    }
+    return <RootMain />
 }
 
 const mapStateToProps = ({ map }) => {  

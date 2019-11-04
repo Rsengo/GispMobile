@@ -4,15 +4,19 @@ import { chipStyles as styles} from './MapTypes.styles';
 import MapTypesAvatar from './MapTypes.Avatar';
 import { useTranslation } from 'react-i18next';
 
-const MapTypesItem = ({ title, type, img, mapType, selectItem }) => {
+const MapTypesItem = ({ title, type, img, selected, selectItem }) => {
     const [translate] = useTranslation();
+    const selectItemCallback = React.useCallback(
+        () => selectItem(type), 
+        [type]
+    );
 
     return (
         <Chip 
             style={styles.chip}
             avatar={<MapTypesAvatar img={img} />}
-            selected={mapType === type}
-            onPress={() => selectItem(type)}
+            selected={selected}
+            onPress={selectItemCallback}
         >
             {translate(title)}
         </Chip>

@@ -14,18 +14,26 @@ const Item = ({
     openDialog 
 }) => {
     const [translate] = useTranslation();
+    const openDialogCallback = React.useCallback(
+        () => openDialog(attributes), 
+        [attributes]
+    );
     
     return (
         <View style={styles.itemContainer}>
             <View style={styles.itemContent}>
-                <Headline>{attributes[displayFieldName] || t(DEFAULT_ITEM_NAME)}</Headline>
+                <Headline>
+                    {
+                        attributes[displayFieldName] || 
+                        translate(DEFAULT_ITEM_NAME)}
+                </Headline>
                 <Caption>{layerName}</Caption>
                 <Caption>{sublayerName}</Caption>
             </View>
             <View style={styles.itemActions}>
                 <Button 
                     mode="outlined" 
-                    onPress={() => openDialog(attributes)}
+                    onPress={openDialogCallback}
                 >
                     {translate('search.carousel.showPropsButton')}
                 </Button>

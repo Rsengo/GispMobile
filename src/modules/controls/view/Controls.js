@@ -23,13 +23,18 @@ const Controls = ({activeModules, ...props}) => {
             .map(x => activeModules[x])
             .every(x => x === false); 
 
+          const onPressCallback = React.useCallback(() => {
+            onPress(!isActive)
+          }, [isActive]); // TODO:
+          
           return (
             <FAB 
+              key={linkedProp}
               visible={visible}
               style={styles[style]}
               small={small}
               icon={icon}
-              onPress={() => onPress(!isActive)}
+              onPress={onPressCallback}
             />
           )
         })

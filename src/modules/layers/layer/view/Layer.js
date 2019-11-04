@@ -35,15 +35,19 @@ const Layer = ({
     title,
     activateLayer
  }) => {
-    const childNodes = children && children.length 
-        ? children.map(x => mapChildToComponent(x, activateLayer)) 
-        : [];
+   const childNodes = React.useMemo(() => {
+     return children && children.length 
+     ? children.map(x => mapChildToComponent(x, activateLayer)) 
+     : [];
+   }, [children]);
+   const activateLayerCallback = React.useCallback(activateLayer, []);
+
     return (
       <View style={styles.container}>
         <LayerCheckbox 
           itemId={itemId} 
           selected={selected} 
-          activateLayer={activateLayer} 
+          activateLayer={activateLayerCallback} 
         />
         <LayerRow
           title={title}

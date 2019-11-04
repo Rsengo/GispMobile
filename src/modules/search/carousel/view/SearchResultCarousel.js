@@ -3,30 +3,28 @@ import { View, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { styles } from './SearchResultCarousel.styles';
 import Item from './SearchResultCarousel.Item';
+import { hideIfNoData } from '../../../../hoc';
 
 const SearchResultCarousel = ({ data, highlightGeometry, openDialog }) => {
-    React.useEffect(() => {
-        if (data && data.length) {
-            highlightGeometry(data[0].geometry);
-        }
-
-        return () => highlightGeometry(null);
-    });
+    const openDialogCallback = React.useCallback(openDialog, []);
+    const highlightGeometryCallback = React.useCallback(highlightGeometry, []);
 
     return (
         <View style={styles.container}>
             <Carousel
                 data={data}
-                renderItem={({item}) => <Item openDialog={openDialog} {...item} />}
+                renderItem={({item}) => <Item openDialog={openDialogCallback} {...item} />}
                 sliderWidth={Dimensions.get('window').width}
                 itemWidth={300}
                 lockScrollWhileSnapping={true}
                 onSnapToItem={(slideIndex) => {
-                    highlightGeometry(data[slideIndex].geometry);
+                    highlightGeometryCallback(data[slideIndex].geometry);
                 }}
             />
         </View>
     )
 };
 
-export default SearchResultCarousel;
+export default hideIfNoData(({data}) => (
+    !data || !data.length
+))(SearchResultCarousel);

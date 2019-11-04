@@ -16,10 +16,10 @@ const MapTypes = ({
 }) => {
     const [translate] = useTranslation();
 
-    const selectItem = (type) => batch(() => {
+    const selectItem = React.useCallback((type) => batch(() => {
         onSelect(type);
         onClose();
-    });
+    }), []);
 
     return(
         <Dialog

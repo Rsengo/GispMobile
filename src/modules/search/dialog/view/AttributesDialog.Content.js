@@ -7,7 +7,10 @@ const DEFAULT_ATTR_VALUE = 'search.dialog.defaultAttrValue';
 
 const Content = ({ attributes }) => {
     const [translate] = useTranslation();
-    const attrKeys = Object.keys(attributes);
+    const attrKeys = React.useMemo(
+        () => Object.keys(attributes), 
+        [attributes]
+    );
 
     return (
         <ScrollView>

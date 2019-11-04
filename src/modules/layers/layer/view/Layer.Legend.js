@@ -11,8 +11,11 @@ const LayerLegend = ({
 }) => {
     const uri = imgUrl ? imgUrl : `data:image/png;base64,${base64img}`;
     const img = (<Image style={styles.img} source={{uri}} />);
+
+    const imgCreate = React.useCallback(() => img, [base64img, imgUrl]);
+    
     return (
-        <List.Item title={legendTitle} key={legendKey} left={() => img} />
+        <List.Item title={legendTitle} key={legendKey} left={imgCreate} />
     );
 }
 

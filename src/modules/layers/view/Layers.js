@@ -11,11 +11,16 @@ const Layers = ({
     activateLayer,
     isOpen,
     onClose
-}) => (
-    <BottomSheet scrollable isOpen={isOpen} onClose={onClose}>
-        <LayersList layersTree={layersTree} activateLayer={activateLayer} />
-    </BottomSheet>
-)
+}) => {
+    const onCloseCallback = React.useCallback(onClose, []);
+    const activateLayerCallback = React.useCallback(activateLayer, []);
+
+    return (
+        <BottomSheet scrollable isOpen={isOpen} onClose={onCloseCallback}>
+            <LayersList layersTree={layersTree} activateLayer={activateLayerCallback} />
+        </BottomSheet>
+    )
+};
 
 const mapStateToProps = ({ layers, controls }) => {
   const { layersTree } = layers;

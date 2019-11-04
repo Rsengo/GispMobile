@@ -54,7 +54,7 @@ const actions = {
 
 const Content = ({ spatialReferences, coordinateJump, onClose }) => {
     const initialState = getInitialState(spatialReferences);
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = React.useReducer(reducer, initialState);
     const actions1 = bindActionCreators(actions, dispatch);
 
     const { 

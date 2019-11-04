@@ -1,5 +1,5 @@
 import { LayerTreeItemTypes } from '../../../constants';
-import { getListSublayers } from '../layer-service/layerService';
+import { getListSublayers } from './layerService';
 
 const _getNode = (layersTree, layerId) => {
     const flatTree = getFlatTree(layersTree);

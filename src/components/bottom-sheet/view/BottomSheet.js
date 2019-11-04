@@ -2,7 +2,6 @@ import React from 'react';
 import { default as ReanimatedBottomSheet } from 'reanimated-bottom-sheet';
 import Header from './BottomSheet.Header';
 import Content from './BottomSheet.Content';
-import { DefaultSnapPoints } from '../data/BottomSheet.constants';
 
 const DefaultSnapPoints = ['70%', '30%', 0];
 
@@ -14,6 +13,7 @@ const BottomSheet = ({
   ...bsProps // forwarding props
 }) => {
   const bsRef = React.useRef();
+  const onCloseCallback = React.useCallback(onClose, []);
 
   React.useEffect(() => {
     const points = snapPoints || DefaultSnapPoints;
@@ -33,7 +33,7 @@ const BottomSheet = ({
       }
       snapPoints = {snapPoints || DefaultSnapPoints}
       ref={bsRef}
-      onCloseEnd={onClose}
+      onCloseEnd={onCloseCallback}
       enabledContentGestureInteraction={enabledContentGestureInteraction || false}
       enabledInnerScrolling={enabledInnerScrolling || true}
       enabledContentTapInteraction={enabledContentTapInteraction || false}
