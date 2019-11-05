@@ -14,6 +14,13 @@ export const LayerTreeItemTypes = {
 }
 
 export const CrsTypes = {
-    Degree: 'degree',
-    Metric: 'metric'
+    DEGREE: 'degree',
+    METRIC: 'metric'
+}
+
+export const GEOMETRY = {
+    color: '#000000',
+    fillColor: '#0000ff04',
+    strokeColor: '#000000',
+    strokeWidth: 3
 }

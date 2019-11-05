@@ -1,3 +1,3 @@
-export { default as Controls } from './view/Controls';
+export { default as Controls } from './Controls';
 
 export { reducer, actions } from './store';

@@ -1,3 +1,3 @@
-export { default as Layers } from './view/Layers';
+export { default as Layers } from './Layers';
 
 export { reducer, actions } from './store';

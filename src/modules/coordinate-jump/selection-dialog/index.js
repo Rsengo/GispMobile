@@ -1,1 +1,1 @@
-export { default as CrsSelectionDialog } from './view/CrsSelectionDialog';
+export { default as CrsSelectionDialog } from './CrsSelectionDialog';

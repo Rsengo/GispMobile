@@ -1,1 +1,1 @@
-export { default as CoordinateInputs } from './view/CoordinateInputs';
+export { default as CoordinateInputs } from './CoordinateInputs';

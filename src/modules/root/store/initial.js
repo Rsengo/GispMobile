@@ -1,5 +1,5 @@
 const initialState = {
-    mapManifestLoadingProcessing: true,
+    appReady: true,
     error: false,
     errorMessage: null
 };

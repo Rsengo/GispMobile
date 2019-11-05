@@ -1,1 +1,1 @@
-export { default as MapTypes } from './view/MapTypes';
+export { default as MapTypes } from './MapTypes';

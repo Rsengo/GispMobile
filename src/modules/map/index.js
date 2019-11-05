@@ -1,3 +1,3 @@
-export { default as Map} from './view/Map';
+export { default as Map} from './Map';
 
 export { reducer, actions } from './store';

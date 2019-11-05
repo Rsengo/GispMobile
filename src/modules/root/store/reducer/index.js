@@ -6,7 +6,7 @@ const reducer = (state=initialState, action) => {
 
     switch (type) {
         case ActionTypes.MAP_MANIFEST_LOAD_PROCESSING:
-            return { ...state, mapManifestLoadingProcessing: payload };
+            return { ...state, appReady: payload };
         
         case ActionTypes.MAP_MANIFEST_LOAD_SUCCESS:
             return { ...state, error: false };

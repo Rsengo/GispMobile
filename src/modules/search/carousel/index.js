@@ -1,1 +1,1 @@
-export { default as SearchResultCarousel } from './view/SearchResultCarousel';
+export { default as SearchResultCarousel } from './SearchResultCarousel';

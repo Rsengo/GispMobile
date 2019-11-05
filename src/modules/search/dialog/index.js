@@ -1,1 +1,1 @@
-export { default as AttributesDialog } from './view/AttributesDialog';
+export { default as AttributesDialog } from './AttributesDialog';
