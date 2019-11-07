@@ -9,6 +9,15 @@ import { useTranslation } from 'react-i18next';
 const _degreeToMetric = ({ degree, minute, second }) => 
     degree + minute / 60 + second / 3600;
 
+const _degreesToDouble = (coord) => {
+    const { latitude, longitude } = coord;
+
+    return {
+        latitude: _degreeToMetric(latitude),
+        longitude: _degreeToMetric(longitude)
+    };
+}
+
 const CoordinateInputsDegree = ({ coordinate, onChange }) => {
     const [state, setState] = React.useState({
         latitude: {
@@ -37,18 +46,13 @@ const CoordinateInputsDegree = ({ coordinate, onChange }) => {
                             key={valueProp}
                             style={styles.input}
                             label={translate(label)}
-                            value={state[valueProp].toString()}
+                            value={state.longitude[valueProp].toString()}
                             keyboardType='decimal-pad'
                             onChangeText={val => {
-                                const coordinate = { ...state };
-                                coordinate[valueProp] = +val;
-                                const { latitude, longitude } = coordinate;
-                                const payload = {
-                                    latitude: _degreeToMetric(latitude),
-                                    longitude: _degreeToMetric(longitude)
-                                };
+                                const coord = { ...state, longitude: { ...state.longitude, [valueProp]: +val } };
+                                const payload = _degreesToDouble(coord);
                                 onChange({ ...coordinate, ...payload })
-                                setState({ ...state, coordinate });
+                                setState({ ...state, ...coord });
                             }}
                         />
                     ))
@@ -62,18 +66,13 @@ const CoordinateInputsDegree = ({ coordinate, onChange }) => {
                             key={valueProp}
                             style={styles.input}
                             label={translate(label)}
-                            value={state[valueProp].toString()}
+                            value={state.latitude[valueProp].toString()}
                             keyboardType='decimal-pad'
                             onChangeText={val => {
-                                const coordinate = { ...state };
-                                coordinate[valueProp] = +val;
-                                const { latitude, longitude } = coordinate;
-                                const payload = {
-                                    latitude: _degreeToMetric(latitude),
-                                    longitude: _degreeToMetric(longitude)
-                                };
+                                const coord = { ...state, latitude: { ...state.latitude, [valueProp]: +val } };
+                                const payload = _degreesToDouble(coord);
                                 onChange({ ...coordinate, ...payload })
-                                setState({ ...state, coordinate });
+                                setState({ ...state, ...coord });
                             }}
                         />
                     ))

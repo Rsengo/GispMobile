@@ -4,17 +4,17 @@ const entries = [
     { 
         title: 'mapTypes.satellite', 
         type: MAP_TYPES.SATELLITE,
-        img: require('../../../../assets/map-types/satellite.png')
+        icon: 'map' //TODO:mdiSatelliteVariant
     },
     { 
         title: 'mapTypes.standard', 
         type: MAP_TYPES.STANDARD,
-        img: require('../../../../assets/map-types/standard.png') 
+        icon: 'map' //TODO:mdiMapMarkerPath
     },
     { 
         title: 'mapTypes.none', 
         type: MAP_TYPES.NONE,
-        img: null 
+        icon: 'map'  //TODO:mdiBorderNoneVariant
     }
 ];
 

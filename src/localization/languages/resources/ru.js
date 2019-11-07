@@ -16,9 +16,6 @@ export default {
         "standard": "Схема",
         "satellite": "Спутник",
         "none": "Без подложки",
-        "dialog": {
-            "title": "Тип карты"
-        }
     },
     "search": {
         "carousel": {

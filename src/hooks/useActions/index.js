@@ -1,8 +1,8 @@
 import { useReducer } from 'react';
 import { bindActionCreators } from 'redux';
 
-const useActions = (reducer, initialState, init, actionCreators) => {
-    const [state, dispatch] = useReducer(reducer, initialState, init);
+const useActions = (reducer, initialState, init = (a) => a, actionCreators) => {
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const getState = () => state;
 

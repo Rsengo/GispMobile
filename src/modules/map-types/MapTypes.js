@@ -1,12 +1,11 @@
 import React from 'react';
-import { Dialog } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
 import { connect, batch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { actions as controlsActions } from '../controls';
 import { actions as mapActions } from '../map';
 import entries from './MapTypes.entries';
 import MapTypesContent from './MapTypes.Content';
+import { BottomSheet } from '../../components';
 
 const MapTypes = ({ 
     isVisible, 
@@ -14,27 +13,18 @@ const MapTypes = ({
     onSelect, 
     mapType
 }) => {
-    const [translate] = useTranslation();
-
     const selectItem = React.useCallback((type) => batch(() => {
         onSelect(type);
-        onClose();
     }), []);
 
     return(
-        <Dialog
-            visible={isVisible}
-            onDismiss={onClose}
-        >
-            <Dialog.Title>{translate('mapTypes.dialog.title')}</Dialog.Title>
-            <Dialog.Content>
-                <MapTypesContent 
-                    mapType={mapType} 
-                    entries={entries} 
-                    selectItem={selectItem} 
-                />
-            </Dialog.Content>
-        </Dialog>
+        <BottomSheet isOpen={isVisible} onClose={onClose} snapPoints={[150, 0]}>
+            <MapTypesContent 
+                mapType={mapType} 
+                entries={entries} 
+                selectItem={selectItem} 
+            />
+        </BottomSheet>
     );
 }
 

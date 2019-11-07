@@ -2,29 +2,29 @@ export const degree = {
     latitudeFields: [
         {
             label: 'coordinateJump.inputs.degree',
-            valueProp: 'latitude.degree',
+            valueProp: 'degree',
         },
         {
             label: 'coordinateJump.inputs.minute',
-            valueProp: 'latitude.minute',
+            valueProp: 'minute',
         },
         {
             label: 'coordinateJump.inputs.second',
-            valueProp: 'latitude.second',
+            valueProp: 'second',
         }
     ],
     longitudeFields: [
         {
             label: 'coordinateJump.inputs.degree',
-            valueProp: 'longitude.degree',
+            valueProp: 'degree',
         },
         {
             label: 'coordinateJump.inputs.minute',
-            valueProp: 'longitude.minute',
+            valueProp: 'minute',
         },
         {
             label: 'coordinateJump.inputs.second',
-            valueProp: 'longitude.second',
+            valueProp: 'second',
         }
     ]
 }

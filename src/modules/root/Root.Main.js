@@ -26,6 +26,6 @@ const Hosted = ({ view }) => (
             {view}
         </Portal>
     </Portal.Host>  
-)
+);
 
 export default RootMain;

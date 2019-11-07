@@ -5,20 +5,23 @@ import CoordinateJumpSelector from './CoordinateJump.Selector';
 import CoordinateJumpControls from './CoordinateJump.Controls';
 import { CrsSelectionDialog } from './selection-dialog';
 import { CoordinateInputs } from './inputs';
-import { actions as actionCreators, reducer, initialState } from './CoordinateJump.store';
+import { actions as actionCreators, reducer, initialState } from './local-store';
 import { useActions } from '../../hooks';
 
 const CoordinateJumpContent = ({ spatialReferences, coordinateJump, onClose }) => {
-    const [state, actions] = useActions(reducer, initialState, null, actionCreators);
+    const initState = { ...initialState, selectedCRS: spatialReferences[0] }
+    const [state, actions] = useActions(reducer, initState, null, actionCreators);
 
     const { 
         selectorVisible, 
         selectedCRS, 
         coordinate
     } = state;
+
     const { type } = selectedCRS;
 
     const closeSelector = React.useCallback(() => actions.changeSelectorVisibility(false), []);
+    const openSelector = React.useCallback(() => actions.changeSelectorVisibility(true), []);
     const onCrsSelected = React.useCallback((crs) => actions.changeSelectedCrs(crs), []);
     const onCoordinateChange = React.useCallback((coord) => actions.changeCoordinate(coord), []);
     const showOnMapCallback = React.useCallback(() => {
@@ -30,7 +33,7 @@ const CoordinateJumpContent = ({ spatialReferences, coordinateJump, onClose }) =
         <View style={styles.mainContainer}>
             <View style={styles.contentContainer}>
                 <CoordinateJumpSelector 
-                    openSelector={closeSelector}
+                    openSelector={openSelector}
                     label={selectedCRS.name}
                 />
                 <CoordinateInputs 
