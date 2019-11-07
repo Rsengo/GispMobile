@@ -1,11 +1,12 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { List, Headline } from 'react-native-paper';
 import AttributesDialogItem from './AttributesDialog.Item';
 import { useTranslation } from 'react-i18next';
+import { View, ScrollView } from 'react-native';
 
 const DEFAULT_ATTR_VALUE = 'search.dialog.defaultAttrValue';
 
-const AttributesDialogContent = ({ attributes }) => {
+const AttributesDialogContent = ({ attributes, displayName }) => {
     const [translate] = useTranslation();
     
     const attrKeys = React.useMemo(
@@ -14,17 +15,17 @@ const AttributesDialogContent = ({ attributes }) => {
     );
 
     return (
-        <ScrollView>
+        <List.Section>
             {
                 attrKeys.map(attrKey => (
-                    <AttributesDialogItem 
+                    <AttributesDialogItem
                         key={attrKey}
-                        attrKey={attrKey} 
-                        attrVal={attributes[attrKey] || translate(DEFAULT_ATTR_VALUE)} 
+                        description={attrKey} 
+                        title={attributes[attrKey] || translate(DEFAULT_ATTR_VALUE)} 
                     />
                 ))
             }
-        </ScrollView>
+        </List.Section>
     );
 };
 

@@ -15,15 +15,15 @@ const SearchResultCarouselItem = ({
 }) => {
     const [translate] = useTranslation();
 
-    const openDialogCallback = React.useCallback(
-        () => openDialog(attributes), 
-        [attributes]
-    );
-
     const displayName = React.useMemo(() => {
         return attributes[displayFieldName] || 
             translate(DEFAULT_ITEM_NAME)
     }, [attributes, displayFieldName])
+
+    const openDialogCallback = React.useCallback(
+        () => openDialog(attributes, displayName), 
+        [attributes, displayName]
+    );
     
     return (
         <View style={styles.itemContainer}>

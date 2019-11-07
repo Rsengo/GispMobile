@@ -19,7 +19,7 @@ const CrsSelectionDialog = ({
                 visible={visible}
                 onDismiss={onDismiss}
             >
-                <Dialog.Title>{translate('coordinateJump:selectionDialog:title')}</Dialog.Title>
+                <Dialog.Title>{translate('coordinateJump.selectionDialog.title')}</Dialog.Title>
                 <Dialog.Content>
                     <CrsSelectionDialogContent 
                         items={items} 

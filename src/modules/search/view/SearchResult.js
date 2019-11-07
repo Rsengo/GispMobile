@@ -14,7 +14,8 @@ const SearchResult = ({
 }) => {
     const [state, setState] = React.useState({
         dialogOpened: false, 
-        attrs: {}
+        attrs: {},
+        displayName: null
     });
 
     const hightlightFirstItem = React.useCallback(() => {
@@ -30,10 +31,11 @@ const SearchResult = ({
         return () => highlightGeometry(null);
     }, [searchData]);
 
-    const openDialog = (attrs) => setState({ 
+    const openDialog = (attrs, displayName) => setState({ 
         ...state, 
         dialogOpened: true, 
-        attrs 
+        attrs,
+        displayName
     });
 
     const closeDialog = () => setState({ 
@@ -41,7 +43,7 @@ const SearchResult = ({
         dialogOpened: false 
     });
 
-    const { dialogOpened, attrs } = state;
+    const { dialogOpened, attrs, displayName } = state;
     
     return (
         <React.Fragment>
@@ -53,7 +55,8 @@ const SearchResult = ({
             <AttributesDialog 
                 isVisible={dialogOpened} 
                 onClose={closeDialog}
-                attributes={attrs} 
+                attributes={attrs}
+                displayName={displayName} 
             />
         </React.Fragment>
     );

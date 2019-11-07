@@ -7,7 +7,7 @@ const MapHighlightObject = ({ geoJson }) => (
     <Geojson 
         geojson={geoJson} 
         color={GEOMETRY.color} 
-        strokeWidth={GEOMETRY.strokeColor} 
+        strokeWidth={GEOMETRY.strokeWidth} 
         fillColor={GEOMETRY.fillColor} 
         strokeColor={GEOMETRY.strokeColor} /> 
 );
