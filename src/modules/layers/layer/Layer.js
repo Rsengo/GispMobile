@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { List } from 'react-native-paper';
+import { List, Checkbox } from 'react-native-paper';
 import styles from './Layer.styles';
 import LayerRow from './Layer.Row';
 
@@ -11,7 +11,7 @@ const LayerCheckbox = ({ itemId, selected, activateLayer }) => {
   
   return (
     <View style={styles.checkboxContainer}>
-      <PaperCheckbox 
+      <Checkbox 
         status={selected ? 'checked' : 'unchecked'} 
         onPress={activateLayerCallback}
       />
@@ -47,7 +47,6 @@ const Layer = ({
         <LayerTitle
           title={title}
           layerKey={layerKey}
-          childNodes={childNodes}
         >
           {
             children && children.length 

@@ -2,8 +2,10 @@ export const API_URL = 'http://tap-vm-tn:89/';
 export const PROXY_URL = 'http://tap-vm-tn:3000';
 
 export const LDAP_SETTINGS = {
-    url: 'ldap://tap-dc2.tomskasu.ru:389'
-}
+    url: 'ldap://tap-dc2.tomskasu.ru:389',
+    login: 'rudencovdp',
+    password: 'AlterEgo1'
+};
 
 export const BASE_CRS = 'EPSG:3857'
 export const WKT_CRS = 'EPSG:4326';
@@ -15,16 +17,16 @@ export const LayerTreeItemTypes = {
     LAYER: 'layer',
     SUBLAYER: 'sublayer',
     LEGEND: 'legend'
-}
+};
 
 export const CrsTypes = {
     DEGREE: 'degree',
     METRIC: 'metric'
-}
+};
 
 export const GEOMETRY = {
     color: '#000000',
     fillColor: '#0000ff04',
     strokeColor: '#000000',
     strokeWidth: 3
-}
+};

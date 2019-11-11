@@ -1,8 +1,8 @@
-import ldap from 'ldapjs';
+// import ldap from 'ldapjs';
 
 class AuthApi {
     constructor({ url, login, password }) {
-        this.client = ldap.createClient({ url });
+        // this.client = ldap.createClient({ url });
         this.login = login;
         this.password = password;
     }

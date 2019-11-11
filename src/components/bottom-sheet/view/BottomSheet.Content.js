@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { contentStyles as styles } from './BottomSheet.styles';
 
 const Content = ({scrollable, children}) => {

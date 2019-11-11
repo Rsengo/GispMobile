@@ -5,7 +5,7 @@ import styles from './MapTypes.styles';
 import { useTranslation } from 'react-i18next';
 
 const SelectedBadge = () => (
-    <Badge style={styles.Badge}>✔</Badge>
+    <Badge style={styles.badge}>✔</Badge>
 );
 
 const MapTypesItem = ({ title, type, img, selected, selectItem }) => {
