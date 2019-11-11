@@ -18,7 +18,7 @@ const buttons = [
     {
         linkedProp: 'searchResultsIsOpened',
         small: true,
-        icon: 'search',
+        icon: 'cancel',
         openMethod: 'openSearchResults',
         style: 'search',
         showIfModuleActive: true

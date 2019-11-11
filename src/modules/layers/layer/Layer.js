@@ -1,9 +1,31 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import LayerCheckbox from './Layer.Checkbox';
-import LayerTitle from './Layer.Title';
+import { List } from 'react-native-paper';
 import styles from './Layer.styles';
 import LayerRow from './Layer.Row';
+
+const LayerCheckbox = ({ itemId, selected, activateLayer }) => {
+  const activateLayerCallback = React.useCallback(() => {
+    activateLayer(itemId, !selected)
+  }, [itemId, selected]);
+  
+  return (
+    <View style={styles.checkboxContainer}>
+      <PaperCheckbox 
+        status={selected ? 'checked' : 'unchecked'} 
+        onPress={activateLayerCallback}
+      />
+    </View>
+  );
+}
+
+const LayerTitle = ({ title, layerKey, children }) => (
+  <View style={styles.itemContainer}>
+    <List.Accordion title={title} key={layerKey}>
+      {children}
+    </List.Accordion>
+  </View>
+);
 
 const Layer = ({ 
     itemId,
@@ -13,11 +35,6 @@ const Layer = ({
     title,
     activateLayer
  }) => {
-   const childNodes = React.useMemo(() => {
-     return children && children.length 
-     ? children.map(x => <LayerRow activateLayer={activateLayer} {...x} />) 
-     : null;
-   }, [children]);
    const activateLayerCallback = React.useCallback(activateLayer, []);
 
     return (
@@ -31,9 +48,16 @@ const Layer = ({
           title={title}
           layerKey={layerKey}
           childNodes={childNodes}
-        />
+        >
+          {
+            children && children.length 
+              ? children.map(x => <LayerRow activateLayer={activateLayer} {...x} />) 
+              : null
+          }
+        </LayerTitle>
       </View>
     )
 }
 
+export { LayerCheckbox, LayerTitle };
 export default Layer;

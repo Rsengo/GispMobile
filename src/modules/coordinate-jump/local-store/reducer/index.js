@@ -9,7 +9,7 @@ const reducer = (state=initialState, action) => {
             return { ...state, selectorVisible: payload };
         
         case ActionTypes.CHANGE_SELECTED_CRS:
-            return { ...state, selectedCRS: payload, selectorVisible: false };
+            return { ...state, selectedCRS: payload };
 
         case ActionTypes.CHANGE_COORDINATE:
             return { ...state, coordinate: payload};

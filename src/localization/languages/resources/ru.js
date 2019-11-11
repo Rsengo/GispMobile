@@ -15,7 +15,7 @@ export default {
     "mapTypes": {
         "standard": "Схема",
         "satellite": "Спутник",
-        "none": "Без подложки",
+        "none": "—",
     },
     "search": {
         "carousel": {

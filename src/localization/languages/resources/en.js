@@ -15,7 +15,7 @@ export default {
     "mapTypes": {
         "standard": "Schema",
         "satellite": "Satellite",
-        "none": "None"
+        "none": "—"
     },
     "search": {
         "carousel": {

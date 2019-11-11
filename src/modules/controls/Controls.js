@@ -15,13 +15,13 @@ const Controls = ({activeModules, ...props}) => {
           const isActive = activeModules[linkedProp];
           const onPress = props[openMethod];
 
-          var keys = Object.keys(activeModules);
-          var filteredKeys = showIfModuleActive 
-            ? keys.filter(x => x !== linkedProp) 
-            : keys;
-          const visible = filteredKeys
+          var keys = Object.keys(activeModules).filter(x => x !== linkedProp);
+   
+          const allOtherClosed = keys
             .map(x => activeModules[x])
-            .every(x => x === false); 
+            .every(x => x === false);
+            
+          const visible = allOtherClosed && (showIfModuleActive ? isActive : !isActive)
 
           const onPressCallback = React.useCallback(() => { //TODO: not in loop
             onPress(!isActive)

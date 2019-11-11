@@ -1,33 +1,34 @@
 import React from 'react';
-import { IconButton } from 'react-native-paper';
+import { Avatar, Badge, TouchableRipple } from 'react-native-paper';
 import { View, Text } from 'react-native';
 import styles from './MapTypes.styles';
 import { useTranslation } from 'react-i18next';
 
-const MapTypesItem = ({ title, type, icon, selected, selectItem }) => {
+const SelectedBadge = () => (
+    <Badge style={styles.Badge}>✔</Badge>
+);
+
+const MapTypesItem = ({ title, type, img, selected, selectItem }) => {
     const [translate] = useTranslation();
     const selectItemCallback = React.useCallback(
         () => selectItem(type), 
         [type]
     );
 
-    const iconStyle = React.useMemo(
-        () => selected ? styles.iconSelected : styles.icon, 
-        [selected]
-    )
-
-    //TODO: title translate
-    //TODO: selected
     return (
         <View style={styles.item}>
-            <IconButton 
-                icon={icon}
-                style={iconStyle}
-                onPress={selectItemCallback}
-            />
+            <TouchableRipple onPress={selectItemCallback}>
+                <Avatar.Image 
+                    size={72}
+                    source={img}
+                    style={styles.icon}
+                />
+            </TouchableRipple>
             <Text style={styles.text}>{translate(title)}</Text>
+            {selected ? (<SelectedBadge />) : null}
         </View>
     );
 }
 
+export { SelectedBadge };
 export default MapTypesItem;

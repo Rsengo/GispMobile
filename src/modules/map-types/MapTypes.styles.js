@@ -1,20 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-const icon = { 
-    marginTop: 5, 
-    marginBottom: 5,
-    width: 72,
-    height: 72,
-    borderColor: '#00000030',
-    borderWidth: 1,
-    borderRadius: 50,
-}
-
-const iconSelected = {
-    ...icon,
-    backgroundColor: '#ffd20070'
-}
-
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
@@ -25,12 +10,25 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     item: {
+        width: 72,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    icon,
-    iconSelected,
+    icon: { 
+        borderColor: '#00000030',
+        borderWidth: 1,
+        backgroundColor: '#ffffff'
+    },
+    badge: {
+        position: 'absolute', 
+        top:0, 
+        right: 0, 
+        zIndex: 1,
+        backgroundColor: '#ffd200',
+        color: '#000000'
+    },
     text: {
         textAlign: 'center',
         width: '100%'
