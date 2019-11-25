@@ -1,10 +1,8 @@
 import { MapApi } from './map-api';
-import { AuthApi } from './auth-api';
 
 class Api {
-  constructor(baseUrl = '', ldapSettins = {}) {
+  constructor(baseUrl = '') {
     this.map = new MapApi(baseUrl);
-    this.auth = new AuthApi(ldapSettins);
   }
 }
 

@@ -101,7 +101,6 @@ const Geojson = props => {
     <React.Fragment>
       {overlays.map((overlay, index) => {
         if (overlay.type === 'point') {
-          console.log('!!!point!!!: ' + JSON.stringify(overlay.coordinates));
           return (
             <Marker
               key={index}

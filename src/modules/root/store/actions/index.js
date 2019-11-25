@@ -15,7 +15,6 @@ const loadMapManifest = () => async (dispatch, _, extra) => {
     dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_PROCESSING, payload: true });
 
     const { api } = extra;
-    // api.auth.login();
     const { success, data, errorMessage } = await api.map.getMapManifest();
 
     dispatch({ type: ActionTypes.MAP_MANIFEST_LOAD_PROCESSING, payload: false });

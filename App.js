@@ -5,11 +5,11 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Root } from './src/modules/root';
 import { defaultTheme } from './src/themes';
 import { Api } from './src/api';
-import { API_URL, LDAP_URL, LANGUAGE, FALLBACK_LANGUAGE } from './constants';
+import { API_URL, LANGUAGE, FALLBACK_LANGUAGE } from './constants';
 import { configureStore } from './src/store';
 import { configureLocalization } from './src/localization';
 
-const api = new Api(API_URL, LDAP_URL);
+const api = new Api(API_URL);
 const store = configureStore({ api });
 
 const i18n = configureLocalization({

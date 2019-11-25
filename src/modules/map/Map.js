@@ -47,7 +47,8 @@ const mapStateToProps = ({ layers, map }) => {
    const { listSublayers } = layers;
   const activeSublayers = layerService.getActive(listSublayers);
   // TODO:
-  const activeLayers = layerService.groupByTopLayer(activeSublayers).filter(x => x.layerId !== 47);
+  // const activeLayers = layerService.groupByTopLayer(activeSublayers).filter(x => x.layerId !== 47);
+  const activeLayers = layerService.groupByTopLayer(activeSublayers);
 
   return { 
     ...map,
