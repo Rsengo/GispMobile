@@ -10,7 +10,8 @@ const itemStyles = StyleSheet.create({
         paddingRight: 15, 
         paddingLeft: 15, 
         paddingTop: 5, 
-        paddingBottom: 5
+        paddingBottom: 10,
+        borderRadius: 10
     },
     itemContent: {
         display: 'flex', 

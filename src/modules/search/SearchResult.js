@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { AttributesDialog } from '../dialog';
-import { SearchResultCarousel } from '../carousel'
+import { AttributesDialog } from './dialog';
+import { SearchResultCarousel } from './carousel'
 import { bindActionCreators } from 'redux';
-import { actions as searchActions } from '../store';
-import { actions as mapActions } from '../../map';
-import { hideIfNoData } from '../../../hoc';
+import { actions as searchActions } from './store';
+import { actions as mapActions } from '../map';
+import { hideIfNoData } from '../../hoc';
 import { compose } from 'recompose';
 
 const SearchResult = ({ 

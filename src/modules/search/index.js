@@ -1,3 +1,3 @@
-export { default as SearchResult } from './view/SearchResult';
+export { default as SearchResult } from './SearchResult';
 
 export { reducer, actions } from './store';

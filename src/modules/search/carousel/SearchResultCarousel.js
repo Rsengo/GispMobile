@@ -15,7 +15,7 @@ const SearchResultCarousel = ({ data, highlightGeometry, openDialog }) => {
                 data={data}
                 renderItem={({item}) => <SearchResultCarouselItem openDialog={openDialogCallback} {...item} />}
                 sliderWidth={Dimensions.get('window').width}
-                itemWidth={300}
+                itemWidth={Dimensions.get('window').width - 10}
                 lockScrollWhileSnapping={true}
                 onSnapToItem={(slideIndex) => {
                     highlightGeometryCallback(data[slideIndex].geometry);
