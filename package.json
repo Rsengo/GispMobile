@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@shoutem/ui": "^1.0.3",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "expo": "^35.0.0",
     "i18next": "^19.0.0",
     "ldapjs": "^1.0.2",
